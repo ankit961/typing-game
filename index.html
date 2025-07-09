@@ -616,26 +616,38 @@ function renderCountingGame(el) {
   const countOpts = Array.from(el.querySelectorAll('.count-opt'));
   const feedback = el.querySelector('#count-feedback');
   const resetBtn = el.querySelector('#count-reset');
+  let finished = false;
+
   countOpts.forEach(opt => {
     opt.addEventListener('click',()=>{
+      if (finished || opt.classList.contains('correct') || opt.classList.contains('incorrect')) return;
+
       if (parseInt(opt.dataset.val,10) === correct) {
         opt.classList.add('correct');
         feedback.innerHTML = `<span class="celebrate">${confettiEmojis[Math.floor(Math.random()*confettiEmojis.length)]} Great counting!</span>`;
         playSound(cheerSound);
         speak(`Yes, there are ${correct} ${obj.plural}!`);
         showConfetti();
-        setTimeout(()=>{feedback.innerHTML = `<span class="celebrate">🎉 You counted all! 🎉</span>`; playSound(cheerSound); resetBtn.style.display="flex";},700);
+        countOpts.forEach(o=>o.style.pointerEvents="none");
+        finished = true;
+        setTimeout(()=>{
+          feedback.innerHTML = `<span class="celebrate">🎉 You counted all! 🎉</span>`;
+          playSound(cheerSound);
+          resetBtn.style.display="flex";
+        },700);
       } else {
         opt.classList.add('incorrect');
         feedback.innerHTML = `<span style="color:#fb6d6d;font-size:1em;">Try again!</span>`;
         speak("Try again!");
         playSound(clickSound);
+        opt.style.pointerEvents = "none"; // disable only the wrong option
+        // others remain clickable
       }
-      countOpts.forEach(o=>o.style.pointerEvents="none");
     });
   });
   resetBtn.addEventListener('click',()=>renderCountingGame(el));
 }
+
 /* ====== Tab control ====== */
 const tabs = [
   {id:"tab-typing", render:renderTypingGame},

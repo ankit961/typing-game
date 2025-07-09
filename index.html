@@ -1,39 +1,59 @@
-<!--
-Toddler Playground with Cheering Audio & Mood
-- Cheering sound and visuals for correct actions in all games!
-- Gentle "Try again" spoken feedback for incorrect answers.
-- All images: OpenMoji.org (CC BY-SA 4.0).
--->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
-  <title>Toddler Playground</title>
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&display=swap" rel="stylesheet">
+  <title>Toddler Playground – Free Learning Games for Kids (Ages 2–7)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="description" content="Free online playground with typing, matching, and counting games for toddlers and preschoolers. Fun, educational, and mobile-friendly. Open source!" />
+  <meta name="keywords" content="toddler games, typing game, matching game, counting game, alphabet game, free, kids, educational, learning, open source, preschool, kindergarten, fun, animal images, OpenMoji, no ads, mobile-friendly" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://yourdomain.com/toddler-playground.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Toddler Playground – Free Learning Games for Kids (Ages 2–7)">
+  <meta property="og:description" content="Play free, fun, educational games for toddlers: typing, matching, counting, with real animal/object images. Safe, open source, and mobile/tablet friendly!">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F981.svg">
+  <meta property="og:url" content="https://yourdomain.com/toddler-playground.html">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Toddler Playground – Free Learning Games for Kids">
+  <meta name="twitter:description" content="Fun, safe, and free learning games for kids: alphabet typing, matching, and counting. Open source, no ads, mobile friendly.">
+  <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F981.svg">
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalApplication",
+    "name": "Toddler Playground",
+    "description": "A free, interactive playground of educational games for toddlers and preschoolers (ages 2-7). Play alphabet typing, matching, and counting games with colorful animal images and real audio feedback.",
+    "applicationCategory": "EducationalGame",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "inLanguage": "en",
+    "url": "https://yourdomain.com/toddler-playground.html",
+    "image": "https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F981.svg",
+    "keywords": "toddler, free games, educational, kids, openmoji, alphabet, learning, preschool, open source"
+  }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&display=swap" rel="stylesheet" />
   <style>
     :root {
       --primary: #21b3fd;
-      --secondary: #fff;
       --accent: #f9b846;
       --accent2: #fb6d6d;
       --green: #60d394;
-      --pink: #ff90b3;
       --purple: #ad9aff;
       --progress-empty: #c0dbfc;
       --progress-found: #34e08c;
-      --shadow: 0 4px 24px 0 rgba(33,179,253,0.09), 0 2px 8px 0 #ffc0cb0d;
-      --confetti-1: #fb6d6d;
-      --confetti-2: #34e08c;
-      --confetti-3: #f9b846;
-      --confetti-4: #ad9aff;
-      --confetti-5: #ff90b3;
-      --confetti-6: #21b3fd;
       --text: #28344c;
-      --text-inverse: #fff;
       --card: #fff7ef;
       --tab: #e4f5ff;
       --tab-active: #b7eaff;
+      --shadow: 0 4px 24px 0 rgba(33,179,253,0.09), 0 2px 8px 0 #ffc0cb0d;
     }
     html, body {
       min-width: 320px;
@@ -42,20 +62,30 @@ Toddler Playground with Cheering Audio & Mood
       background: linear-gradient(180deg, #d0f3ff 0%, #fff7ef 100%);
       color: var(--text);
       overscroll-behavior: none;
+      padding: 0; margin: 0;
     }
-    body { margin:0; }
     #app-wrapper {
-      max-width: 460px;
+      max-width: 500px;
       margin: 1.2rem auto 1.2rem auto;
-      padding: 1.4rem 0.3rem 2.1rem 0.3rem;
+      padding: 1.1rem 0.3rem 2.1rem 0.3rem;
       border-radius: 2.6rem;
       box-shadow: var(--shadow);
       background: var(--card);
       display: flex; flex-direction: column; align-items: center;
       position: relative;
+      min-height: 93vh;
+    }
+    h1 {
+      text-align: center;
+      font-size: 2.1rem;
+      color: var(--primary);
+      margin-bottom: 1.1em;
+      margin-top: 0.7em;
+      font-weight: 900;
+      letter-spacing: 0.02em;
     }
     .tab-bar {
-      width: 98%;
+      width: 99%;
       display: flex;
       justify-content: center;
       margin-bottom: 1.5em;
@@ -70,8 +100,8 @@ Toddler Playground with Cheering Audio & Mood
       flex: 1 1 33%;
       background: transparent;
       color: var(--primary);
-      font-size: 1.23rem;
-      padding: 0.75em 1.1em;
+      font-size: 1.12rem;
+      padding: 0.75em 1em;
       border: none;
       font-weight: 700;
       border-radius: 1.5em;
@@ -80,7 +110,7 @@ Toddler Playground with Cheering Audio & Mood
       transition: background 0.16s, color 0.18s;
       outline: none;
       display: flex; align-items: center; justify-content: center;
-      gap: 0.45em;
+      gap: 0.4em;
     }
     .tab-btn.active, .tab-btn:focus {
       background: var(--tab-active);
@@ -89,86 +119,109 @@ Toddler Playground with Cheering Audio & Mood
     }
     .game-content {
       width: 99%;
-      margin-top: 0.6em;
+      margin-top: 0.3em;
       margin-bottom: 0.8em;
-      min-height: 300px;
+      min-height: 290px;
     }
     .celebrate {
-      font-size: 2.4rem;
+      font-size: 2.1rem;
       font-weight: bold;
       color: #34e08c;
-      margin: 0.5em 0 0.1em 0;
+      margin: 0.6em 0 0.2em 0;
       text-align: center;
-      animation: pop-letter 0.8s cubic-bezier(.41,1.6,.56,1.14);
-      letter-spacing: 0.03em;
+      animation: pop-letter 0.7s cubic-bezier(.41,1.6,.56,1.14);
+      letter-spacing: 0.04em;
       text-shadow: 0 2px 12px #fff, 0 1px 8px #fff8;
     }
     @keyframes pop-letter {
       0% { transform: scale(0.6) rotate(-13deg);}
-      70% { transform: scale(1.17) rotate(7deg);}
+      70% { transform: scale(1.12) rotate(7deg);}
       100% { transform: scale(1.04) rotate(0deg);}
     }
-    .feedback-word.celebrate { color: #f9b846;}
-    /* Add rest of styles from previous code for .progress-section, .match-card, etc */
-    .progress-section { display: flex; flex-direction: column; align-items: center; margin: 0.6rem 0 1.1rem 0; gap: 0.3rem; z-index: 2; width: 98%;}
-    .progress-dots { display: flex; flex-wrap: wrap; gap: 0.35rem 0.18rem; justify-content: center; margin-bottom: 0.3rem; max-width: 390px;}
-    .progress-dot { width: 26px; height: 26px; border-radius: 50%; background: var(--progress-empty); border: 2.2px solid #fff; box-shadow: 0 1.2px 4px #e0e7ef91; display: flex; align-items: center; justify-content: center; font-size: 1.04rem; font-weight: 700; color: #bdd4fc; transition: background 0.35s; position: relative; user-select: none;}
-    .progress-dot.found { background: var(--progress-found); color: #31a871; animation: popdot 0.2s cubic-bezier(0.4,1.8,0.6,1) 1; border: 2.2px solid var(--green);}
-    @keyframes popdot { 0% { transform: scale(1); } 60% { transform: scale(1.28); } 100% { transform: scale(1); }}
-    .progress-counter { font-size: 1.18rem; color: var(--primary); letter-spacing: 0.05em; font-weight: 700; text-align: center; padding-top: 2px;}
-    .feedback { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 210px; width: 99%; margin: 1.1rem 0 0.5rem 0; position: relative; z-index: 2; outline: none;}
-    .feedback-img { width: 134px; height: 134px; border-radius: 2rem; background: #fff; display: flex; align-items: center; justify-content: center; margin-bottom: 0.4em; box-shadow: 0 4px 28px 0 rgba(33,179,253,0.13); opacity: 0; transform: scale(0.6) rotate(-9deg); transition: opacity 0.38s, transform 0.44s cubic-bezier(.39,2.0,.47,1.15); font-size: 5rem; overflow: hidden; border: 2.5px solid #e0e7ef; background: linear-gradient(130deg, #fafcfd 60%, #e5f8ff 100%); will-change: transform, opacity;}
-    .feedback-img.show { opacity: 1; transform: scale(1.11) rotate(2deg);}
-    .feedback-word { font-size: 1.55rem; color: var(--accent2); font-weight: 700; margin-bottom: 0.07em; text-align: center; min-height: 1.8em;}
-    .feedback-number { font-size: 4.7rem; font-weight: 700; color: var(--accent); margin-bottom: 0.13em; text-align: center; opacity: 0; min-height: 1.2em;}
-    .feedback-number.show { opacity: 1; }
+    .progress-section { display: flex; flex-direction: column; align-items: center; margin: 0.6rem 0 1.1rem 0; gap: 0.3rem; width: 98%;}
+    .progress-dots { display: flex; flex-wrap: wrap; gap: 0.3rem 0.12rem; justify-content: center; margin-bottom: 0.3rem; max-width: 390px;}
+    .progress-dot { width: 26px; height: 26px; border-radius: 50%; background: var(--progress-empty); border: 2.2px solid #fff; box-shadow: 0 1.2px 4px #e0e7ef91; display: flex; align-items: center; justify-content: center; font-size: 1.02rem; font-weight: 700; color: #bdd4fc; transition: background 0.3s; position: relative; user-select: none;}
+    .progress-dot.found { background: var(--progress-found); color: #31a871; border: 2.2px solid var(--green);}
+    .progress-counter { font-size: 1.07rem; color: var(--primary); letter-spacing: 0.05em; font-weight: 700; text-align: center;}
+    .feedback { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 180px; width: 99%; margin: 1.1rem 0 0.5rem 0; outline: none;}
+    .feedback-img { width: 108px; height: 108px; border-radius: 1.3rem; background: #fff; display: flex; align-items: center; justify-content: center; margin-bottom: 0.18em; box-shadow: 0 4px 18px 0 rgba(33,179,253,0.13); font-size: 4.2rem; overflow: hidden; border: 2.1px solid #e0e7ef; background: linear-gradient(130deg, #fafcfd 60%, #e5f8ff 100%);}
+    .feedback-img.show { animation: pop-letter 0.5s;}
+    .feedback-word { font-size: 1.24rem; color: var(--accent2); font-weight: 700; margin-bottom: 0.03em; text-align: center;}
+    .feedback-number { font-size: 2.7rem; font-weight: 700; color: var(--accent); margin-bottom: 0.1em; text-align: center;}
     .confetti { position: fixed; left: 0; top: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 30; display: flex; align-items: center; justify-content: center; overflow: visible;}
-    .confetti > div { position: absolute; will-change: transform, opacity; pointer-events: none; font-size: 2.4rem; text-shadow: 0 1.5px 0 #fff, 0 1px 8px #eee; filter: drop-shadow(0 1px 4px #fff);}
-    .match-cards, .match-drops { display: flex; flex-wrap: wrap; gap: 1.2em; justify-content: center; }
-    .match-card { width: 88px; height: 102px; background: #e0f8ff; border-radius: 1.3em; box-shadow: 0 2px 10px #abf1ff3c; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: grab; position:relative; font-size: 2.4rem; user-select:none; font-weight:700; border: 2.5px solid #fff; transition: box-shadow 0.2s, background 0.13s;}
-    .match-card.dragging { opacity: 0.66; box-shadow: 0 6px 16px #43bbfd4d;}
-    .match-drop { width: 88px; height: 102px; background: #f6ecff; border-radius: 1.3em; box-shadow: 0 2px 10px #abf1ff3c; display: flex; align-items: center; justify-content: center; margin: 0.2em; border: 2.5px dashed #b8aaff; position:relative; transition: border-color 0.14s, background 0.16s;}
+    .confetti > div { position: absolute; will-change: transform, opacity; pointer-events: none; font-size: 1.6rem; text-shadow: 0 1.5px 0 #fff, 0 1px 8px #eee; filter: drop-shadow(0 1px 4px #fff);}
+    .match-cards, .match-drops { display: flex; flex-wrap: wrap; gap: 1.1em; justify-content: center;}
+    .match-card { width: 72px; height: 85px; background: #e0f8ff; border-radius: 1.1em; box-shadow: 0 2px 10px #abf1ff3c; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: grab; font-size: 2.1rem; user-select:none; font-weight:700; border: 2.1px solid #fff; transition: box-shadow 0.2s, background 0.13s;}
+    .match-card.dragging { opacity: 0.68; box-shadow: 0 6px 16px #43bbfd4d;}
+    .match-drop { width: 72px; height: 85px; background: #f6ecff; border-radius: 1.1em; box-shadow: 0 2px 10px #abf1ff3c; display: flex; align-items: center; justify-content: center; margin: 0.1em; border: 2.1px dashed #b8aaff; position:relative;}
     .match-drop.matched { background: #d9ffe3; border-color: #5ecb95;}
-    .match-drop .match-img { width: 66px; height: 66px; pointer-events:none; filter: drop-shadow(0 2px 6px #fff);}
-    .match-drop .drop-label { position: absolute; bottom: 0.2em; width: 100%; text-align: center; font-size: 1.05em; color: #ad9aff;}
-    .counting-q { text-align: center; font-size: 1.3rem; font-weight: 700; color: var(--primary); margin: 0.6em 0 1.2em 0;}
-    .counting-objects { display: flex; flex-wrap: wrap; gap: 0.6em; justify-content: center; margin-bottom: 1.1em;}
-    .counting-objects img { width: 54px; height: 54px; }
-    .counting-options { display: flex; gap: 1.1em; justify-content: center; margin-bottom: 1em;}
-    .count-opt { font-size: 2.1rem; color: #fb6d6d; background: #fff; border: 2.5px solid #f9b846; border-radius: 1em; min-width: 54px; min-height: 54px; display: flex; align-items: center; justify-content: center; font-weight: 700; cursor: pointer; box-shadow: 0 2px 12px #fae5b0bb; transition: background 0.15s, color 0.13s;}
+    .match-drop .match-img { width: 48px; height: 48px; pointer-events:none;}
+    .match-drop .drop-label { position: absolute; bottom: 0.15em; width: 100%; text-align: center; font-size: 0.92em; color: #ad9aff;}
+    .counting-q { text-align: center; font-size: 1.1rem; font-weight: 700; color: var(--primary); margin: 0.5em 0 1em 0;}
+    .counting-objects { display: flex; flex-wrap: wrap; gap: 0.38em; justify-content: center; margin-bottom: 0.8em;}
+    .counting-objects img { width: 36px; height: 36px;}
+    .counting-options { display: flex; gap: 0.7em; justify-content: center; margin-bottom: 1em;}
+    .count-opt { font-size: 1.3rem; color: #fb6d6d; background: #fff; border: 2.1px solid #f9b846; border-radius: 0.85em; min-width: 36px; min-height: 36px; display: flex; align-items: center; justify-content: center; font-weight: 700; cursor: pointer; box-shadow: 0 2px 12px #fae5b0bb; transition: background 0.15s, color 0.13s;}
     .count-opt.correct { background: #d9ffe3; color: #5ecb95; border-color: #5ecb95;}
     .count-opt.incorrect { background: #fff0ef; color: #fb6d6d; border-color: #fb6d6d;}
-    @media (max-width: 650px) {
-      #app-wrapper { padding: 0.7rem 0.02rem 1.2rem 0.02rem; }
-      .feedback-img { width: 82px; height: 82px; font-size: 2.6rem; }
-      .match-card, .match-drop { width: 61px; height: 70px; }
-      .match-img { width: 40px; height: 40px; }
-      .progress-dot { width: 19px; height: 19px; font-size: 1rem;}
-      .counting-objects img { width: 34px; height: 34px;}
+    .play-again-btn {
+      margin: 1.2rem auto 0.2rem auto;
+      padding: 0.9em 2.1em 0.9em 2.1em;
+      border-radius: 2em;
+      font-size: 1.05rem;
+      font-weight: 700;
+      background: linear-gradient(90deg,#21b3fd 20%,#6aebbf 100%);
+      color: #fff;
+      border: none;
+      box-shadow: 0 2px 12px 0 rgba(33,179,253,0.13);
+      cursor: pointer;
+      outline: none;
+      letter-spacing: 0.02em;
+      transition: background 0.2s, color 0.16s;
+      z-index: 2;
+      position: relative;
+      display: inline-flex; align-items: center; gap: 0.5em;
+    }
+    @media (max-width: 600px) {
+      #app-wrapper { padding: 0.5rem 0.01rem 1rem 0.01rem; }
+      .feedback-img { width: 67px; height: 67px; font-size: 2rem;}
+      .match-card, .match-drop { width: 44px; height: 52px; }
+      .progress-dot { width: 16px; height: 16px; font-size: 0.9rem;}
+      .counting-objects img { width: 21px; height: 21px;}
+      .play-again-btn { font-size:0.98rem;}
+      h1 { font-size: 1.38rem;}
     }
   </style>
 </head>
 <body>
 <div id="app-wrapper" aria-label="Toddler Playground">
-  <nav class="tab-bar" role="tablist">
-    <button class="tab-btn active" id="tab-typing" role="tab" aria-selected="true" aria-controls="typing-tab"><span>⌨️</span> Typing</button>
-    <button class="tab-btn" id="tab-matching" role="tab" aria-selected="false" aria-controls="matching-tab"><span>🧩</span> Matching</button>
-    <button class="tab-btn" id="tab-counting" role="tab" aria-selected="false" aria-controls="counting-tab"><span>🔢</span> Counting</button>
+  <h1>
+    Toddler Playground <span aria-hidden="true" style="font-size:1.7rem;">🎈</span>
+  </h1>
+  <nav class="tab-bar" role="tablist" aria-label="Choose a game">
+    <button class="tab-btn active" id="tab-typing" role="tab" aria-selected="true" aria-controls="typing-tab">
+      <span aria-hidden="true">⌨️</span>
+      <span>Typing</span>
+    </button>
+    <button class="tab-btn" id="tab-matching" role="tab" aria-selected="false" aria-controls="matching-tab">
+      <span aria-hidden="true">🧩</span>
+      <span>Matching</span>
+    </button>
+    <button class="tab-btn" id="tab-counting" role="tab" aria-selected="false" aria-controls="counting-tab">
+      <span aria-hidden="true">🔢</span>
+      <span>Counting</span>
+    </button>
   </nav>
-  <section class="game-content" id="game-content">
+  <main class="game-content" id="game-content" aria-live="polite" aria-relevant="additions removals">
     <!-- Game panels injected here -->
-  </section>
+  </main>
   <div class="confetti" aria-hidden="true" style="display:none"></div>
 </div>
-<!-- Sounds -->
-<audio id="clickSound" preload="auto" aria-hidden="true">
-  <source src="data:audio/mp3;base64,//uQxA....[TRUNCATED]" type="audio/mp3" />
-</audio>
-<audio id="dingSound" preload="auto" aria-hidden="true">
-  <source src="https://cdn.pixabay.com/audio/2022/07/26/audio_124bfa60c8.mp3" type="audio/mp3" />
+<audio id="clickSound" preload="auto">
+  <source src="https://cdn.pixabay.com/audio/2022/10/16/audio_125bfa7dfd.mp3" type="audio/mp3" />
 </audio>
 <audio id="cheerSound" preload="auto">
-  <source src="https://cdn.pixabay.com/audio/2022/07/26/audio_124bfcb708.mp3" type="audio/mp3" />
+  <source src="https://cdn.pixabay.com/audio/2022/10/16/audio_125c09d2be.mp3" type="audio/mp3" />
 </audio>
 <script>
 const openmoji = code => `https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/${code}.svg`;
@@ -214,7 +267,6 @@ const keyOrder = [
   ..."ABCDEFGHIJKLMNOPQRSTUVWXYZ", "0","1","2","3","4","5","6","7","8","9"
 ];
 const clickSound = document.getElementById('clickSound');
-const dingSound = document.getElementById('dingSound');
 const cheerSound = document.getElementById('cheerSound');
 const confettiDiv = document.querySelector('.confetti');
 function playSound(audioElem) { try { audioElem.currentTime = 0; audioElem.play(); } catch{} }
@@ -232,26 +284,24 @@ function showConfetti() {
   confettiDiv.style.display = "flex";
   confettiDiv.innerHTML = '';
   const colors = [
-    'var(--confetti-1)', 'var(--confetti-2)', 'var(--confetti-3)', 'var(--confetti-4)',
-    'var(--confetti-5)', 'var(--confetti-6)'
+    '#fb6d6d', '#34e08c', '#f9b846', '#ad9aff', '#ff90b3', '#21b3fd'
   ];
-  const N = 32 + Math.floor(Math.random()*18);
+  const N = 32 + Math.floor(Math.random()*14);
   for (let i = 0; i < N; ++i) {
     const div = document.createElement('div');
     div.style.left = `${Math.random() * 100}%`;
-    div.style.top = `${8+Math.random()*60}%`;
-    div.style.fontSize = `${22 + Math.random() * 44}px`;
+    div.style.top = `${10+Math.random()*70}%`;
+    div.style.fontSize = `${18 + Math.random() * 28}px`;
     div.style.color = colors[Math.floor(Math.random()*colors.length)];
     div.innerText = confettiEmojis[Math.floor(Math.random()*confettiEmojis.length)];
     confettiDiv.appendChild(div);
     setTimeout(() => {
-      div.style.transform = `translateY(${120 + Math.random()*260}px) rotate(${Math.random()*360}deg)`;
+      div.style.transform = `translateY(${120 + Math.random()*190}px) rotate(${Math.random()*360}deg)`;
       div.style.opacity = '0.0';
     }, 35 + i*18);
   }
-  setTimeout(() => { confettiDiv.style.display="none"; }, 1800);
+  setTimeout(() => { confettiDiv.style.display="none"; }, 1300);
 }
-
 /* ===== Typing Game ===== */
 function renderTypingGame(el) {
   el.innerHTML = `
@@ -295,13 +345,11 @@ function renderTypingGame(el) {
   function showLetterFeedback(letter) {
     const data = alphabetData.find(d=>d.letter===letter) || {};
     feedbackImg.innerHTML = data.img
-      ? `<img src="${data.img}" alt="${data.word||letter}" width="128" height="128" style="width:100%;height:100%;object-fit:contain;" loading="eager" />`
-      : `<span style="font-size:5rem;">${letter}</span>`;
+      ? `<img src="${data.img}" alt="${data.word||letter}" width="100" height="100" style="width:100%;height:100%;object-fit:contain;" loading="eager" />`
+      : `<span style="font-size:2.5rem;">${letter}</span>`;
     feedbackImg.style.display = "";
-    feedbackImg.classList.remove('show');
-    setTimeout(() => feedbackImg.classList.add('show'), 12);
+    feedbackImg.classList.add('show');
     feedbackWord.innerText = data.word || "";
-    feedbackNumber.classList.remove('show');
     feedbackNumber.innerText = '';
     celebrateDiv.style.display = "block";
     celebrateDiv.innerHTML = confettiEmojis[Math.floor(Math.random()*confettiEmojis.length)] + " " + cheerPhrases[Math.floor(Math.random()*cheerPhrases.length)];
@@ -311,15 +359,14 @@ function renderTypingGame(el) {
     setTimeout(()=>celebrateDiv.style.display="none", 1400);
   }
   function showNumberFeedback(num) {
-    feedbackImg.innerHTML = `<img src="${numberData[num].img}" alt="${num}" width="96" height="96" style="width:72%;height:72%;object-fit:contain;" loading="eager" />`;
+    feedbackImg.innerHTML = `<img src="${numberData[num].img}" alt="${num}" width="70" height="70" style="width:75%;height:75%;object-fit:contain;" loading="eager" />`;
     feedbackImg.style.display = "";
     feedbackImg.classList.add('show');
     feedbackWord.innerText = '';
     feedbackNumber.innerText = num;
-    feedbackNumber.classList.add('show');
     celebrateDiv.style.display = "block";
     celebrateDiv.innerHTML = confettiEmojis[Math.floor(Math.random()*confettiEmojis.length)] + " " + cheerPhrases[Math.floor(Math.random()*cheerPhrases.length)];
-    playSound(dingSound);
+    playSound(clickSound);
     playSound(cheerSound);
     sayPhrase(cheerPhrases);
     setTimeout(()=>celebrateDiv.style.display="none", 1400);
@@ -329,7 +376,6 @@ function renderTypingGame(el) {
     feedbackImg.classList.remove('show');
     feedbackWord.innerText = '';
     feedbackNumber.innerText = '';
-    feedbackNumber.classList.remove('show');
     celebrateDiv.style.display = "none";
   }
   function maybeShowPlayAgain() {
@@ -405,29 +451,28 @@ function renderTypingGame(el) {
 }
 /* ===== Matching Game ===== */
 function renderMatchingGame(el) {
-  // Choose 5 random letters to match
-  let choices = alphabetData.slice().sort(()=>0.5-Math.random()).slice(0,5);
+  let choices = alphabetData.slice().sort(()=>0.5-Math.random()).slice(0,6);
   let shuffled = choices.slice().sort(()=>0.5-Math.random());
   el.innerHTML = `
-    <div style="text-align:center;font-size:1.25rem;font-weight:700;color:var(--primary);margin-bottom:0.7em;">
-      <span style="font-size:2em;">🧩</span> Match each letter to its animal!
-    </div>
+    <h2 style="text-align:center;font-size:1.1rem;font-weight:700;color:var(--primary);margin-bottom:0.35em;">
+      <span style="font-size:1.8em;">🧩</span> Match the letter to its animal!
+    </h2>
     <div class="match-drops" id="matchDrops">
-      ${choices.map((d,i)=>`
+      ${choices.map(d=>`
       <div class="match-drop" data-letter="${d.letter}" aria-label="Drop for ${d.word}">
-        <img class="match-img" src="${d.img}" alt="${d.word}" draggable="false" />
+        <img class="match-img" src="${d.img}" alt="${d.word}" />
         <div class="drop-label">${d.word}</div>
       </div>
       `).join('')}
     </div>
-    <div class="match-cards" id="matchCards" style="margin-top:1.3em;">
-      ${shuffled.map((d,i)=>`
+    <div class="match-cards" id="matchCards" style="margin-top:1.1em;">
+      ${shuffled.map(d=>`
         <div class="match-card" draggable="true" data-letter="${d.letter}" aria-label="Drag letter ${d.letter}">
-          <div style="font-size:2.1em;">${d.letter}</div>
+          <div style="font-size:1.4em;">${d.letter}</div>
         </div>
       `).join('')}
     </div>
-    <div id="match-feedback" style="margin-top:1em;font-size:1.55em;font-weight:700;text-align:center;"></div>
+    <div id="match-feedback" style="margin-top:1em;font-size:1.22em;font-weight:700;text-align:center;"></div>
     <button id="match-reset" class="play-again-btn" style="display:none;margin-top:1.2em;"><span>🔄</span> Play again!</button>
   `;
   const drops = Array.from(el.querySelectorAll('.match-drop'));
@@ -436,7 +481,6 @@ function renderMatchingGame(el) {
   const resetBtn = el.querySelector('#match-reset');
   let matched = 0;
   let draggingCard = null;
-  // Touch and drag events
   cards.forEach(card => {
     card.addEventListener('dragstart', e=>{
       draggingCard = card; card.classList.add('dragging');
@@ -453,6 +497,13 @@ function renderMatchingGame(el) {
       card.style.zIndex = '';
       draggingCard = null;
     });
+    card.addEventListener('click', function() {
+      // for accessibility, let kids "tap" then tap target.
+      if (cards.some(c=>c.classList.contains('selected'))) {
+        cards.forEach(c=>c.classList.remove('selected'));
+      }
+      card.classList.add('selected');
+    });
   });
   drops.forEach(drop => {
     drop.addEventListener('dragover', e => { e.preventDefault(); });
@@ -463,10 +514,9 @@ function renderMatchingGame(el) {
         draggingCard.style.visibility = 'hidden';
         matched++;
         feedback.innerHTML = `<span class="celebrate">${confettiEmojis[Math.floor(Math.random()*confettiEmojis.length)]} ${cheerPhrases[Math.floor(Math.random()*cheerPhrases.length)]}</span>`;
-        playSound(dingSound);
         playSound(cheerSound);
-        sayPhrase(cheerPhrases);
         showConfetti();
+        sayPhrase(cheerPhrases);
         if (matched === choices.length) {
           setTimeout(()=>{feedback.innerHTML = `<span class="celebrate">🎉 You matched all! 🎉</span>`; playSound(cheerSound); resetBtn.style.display="";},700);
         }
@@ -475,6 +525,8 @@ function renderMatchingGame(el) {
         sayPhrase("Try again!");
         playSound(clickSound);
       }
+      draggingCard.classList.remove('dragging');
+      draggingCard = null;
     });
     drop.addEventListener('touchmove', e=>{e.preventDefault();});
     drop.addEventListener('touchend', e => {
@@ -490,10 +542,9 @@ function renderMatchingGame(el) {
           draggingCard.style.visibility = 'hidden';
           matched++;
           feedback.innerHTML = `<span class="celebrate">${confettiEmojis[Math.floor(Math.random()*confettiEmojis.length)]} ${cheerPhrases[Math.floor(Math.random()*cheerPhrases.length)]}</span>`;
-          playSound(dingSound);
           playSound(cheerSound);
-          sayPhrase(cheerPhrases);
           showConfetti();
+          sayPhrase(cheerPhrases);
           if (matched === choices.length) {
             setTimeout(()=>{feedback.innerHTML = `<span class="celebrate">🎉 You matched all! 🎉</span>`; playSound(cheerSound); resetBtn.style.display="";},700);
           }
@@ -506,12 +557,32 @@ function renderMatchingGame(el) {
       draggingCard.classList.remove('dragging');
       draggingCard = null;
     });
+    drop.addEventListener('click', function() {
+      // for accessibility, let kids tap target after selecting card
+      let sel = cards.find(c=>c.classList.contains('selected'));
+      if (sel && drop.dataset.letter === sel.dataset.letter && !drop.classList.contains('matched')) {
+        drop.classList.add('matched');
+        sel.style.visibility = 'hidden';
+        matched++;
+        feedback.innerHTML = `<span class="celebrate">${confettiEmojis[Math.floor(Math.random()*confettiEmojis.length)]} ${cheerPhrases[Math.floor(Math.random()*cheerPhrases.length)]}</span>`;
+        playSound(cheerSound);
+        showConfetti();
+        sayPhrase(cheerPhrases);
+        if (matched === choices.length) {
+          setTimeout(()=>{feedback.innerHTML = `<span class="celebrate">🎉 You matched all! 🎉</span>`; playSound(cheerSound); resetBtn.style.display="";},700);
+        }
+      } else if (sel) {
+        feedback.innerHTML = `<span style="color:#fb6d6d;font-size:1em;">Try again!</span>`;
+        sayPhrase("Try again!");
+        playSound(clickSound);
+      }
+      cards.forEach(c=>c.classList.remove('selected'));
+    });
   });
   resetBtn.addEventListener('click', ()=>renderMatchingGame(el));
 }
 /* ===== Counting Game ===== */
 function renderCountingGame(el) {
-  // Pick a random number 2-7
   const objects = [
     { word:"Apple", img:openmoji('1F34E') },
     { word:"Frog", img:openmoji('1F438') },
@@ -529,15 +600,15 @@ function renderCountingGame(el) {
   }
   options = options.sort(()=>0.5-Math.random());
   el.innerHTML = `
-    <div class="counting-q">${obj.word}s! How many?</div>
+    <h2 class="counting-q">${obj.word}s! How many?</h2>
     <div class="counting-objects">
       ${arr.map(()=>`<img src="${obj.img}" alt="${obj.word}" draggable="false" />`).join('')}
     </div>
     <div class="counting-options">
       ${options.map(opt=>`<div class="count-opt" data-val="${opt}">${opt}</div>`).join('')}
     </div>
-    <div id="count-feedback" style="margin-top:0.9em;font-size:1.6em;font-weight:700;text-align:center;"></div>
-    <button id="count-reset" class="play-again-btn" style="display:none;margin-top:1.2em;"><span>🔄</span> Play again!</button>
+    <div id="count-feedback" style="margin-top:0.7em;font-size:1.16em;font-weight:700;text-align:center;"></div>
+    <button id="count-reset" class="play-again-btn" style="display:none;margin-top:1em;"><span>🔄</span> Play again!</button>
   `;
   const countOpts = Array.from(el.querySelectorAll('.count-opt'));
   const feedback = el.querySelector('#count-feedback');
@@ -547,7 +618,6 @@ function renderCountingGame(el) {
       if (parseInt(opt.dataset.val,10) === correct) {
         opt.classList.add('correct');
         feedback.innerHTML = `<span class="celebrate">${confettiEmojis[Math.floor(Math.random()*confettiEmojis.length)]} ${cheerPhrases[Math.floor(Math.random()*cheerPhrases.length)]}</span>`;
-        playSound(dingSound);
         playSound(cheerSound);
         sayPhrase(cheerPhrases);
         showConfetti();
@@ -595,11 +665,12 @@ showTab(0);
 </script>
 <!--
 ==== README ====
-Toddler Playground – Cheering Edition!
-- Every correct answer gives a cheer sound and message; mistakes get gentle spoken encouragement.
-- Switch games by tapping tabs. Everything is open-source, responsive, and mobile/tablet friendly!
+Toddler Playground
+- Fully responsive, mobile/tablet/desktop friendly, SEO optimized.
+- 3 toddler games: Typing (with animal images), Matching (with drag-drop and tap support), Counting (object counting).
+- Each action has cheerful sounds and encouragement, no JS errors.
 - All animal/object images from OpenMoji.org (CC BY-SA 4.0).
-- No dependencies, open in any browser.
+- Copy, save as .html, and use directly.
 MIT License.
 -->
 </body>

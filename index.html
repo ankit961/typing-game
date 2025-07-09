@@ -788,56 +788,92 @@ function renderSoundGuessGame(el) {
 }
 
 // ==== Register all games ====
-GAMES.push(
+const GAMES = [
   {
-    id: "shape", label: "Shape Match",
+    id: "typing",
+    label: "Typing Game",
+    img: "https://openclipart.org/download/307190/keyboard-icon.svg",
+    desc: "Type or tap the letter to discover its word.",
+    render: renderTypingGame
+  },
+  {
+    id: "matching",
+    label: "Matching Game",
+    img: "https://openclipart.org/download/310360/puzzle-13.svg",
+    desc: "Match the letter with its picture.",
+    render: renderMatchingGame
+  },
+  {
+    id: "counting",
+    label: "Counting Game",
+    img: "https://openclipart.org/download/306697/abacus.svg",
+    desc: "Count and choose the correct number.",
+    render: renderCountingGame
+  },
+  {
+    id: "color",
+    label: "Color Picker",
+    img: "https://openclipart.org/download/274721/palette.svg",
+    desc: "Pick the object of the correct color.",
+    render: renderColorPickerGame
+  },
+  {
+    id: "shape",
+    label: "Shape Match",
     img: "https://openclipart.org/download/239406/geometric-shapes.svg",
     desc: "Find the right shape.",
     render: renderShapeMatchGame
   },
   {
-    id: "oddone", label: "Odd One Out",
+    id: "oddone",
+    label: "Odd One Out",
     img: "https://openclipart.org/download/272330/puzzlepiece.svg",
     desc: "Find the item that doesn't belong.",
     render: renderOddOneGame
   },
   {
-    id: "memory", label: "Memory Game",
+    id: "memory",
+    label: "Memory Game",
     img: "https://openclipart.org/download/307307/memory.svg",
     desc: "Find all matching pairs.",
     render: renderMemoryGame
   },
   {
-    id: "traceline", label: "Trace Line",
+    id: "traceline",
+    label: "Trace Line",
     img: "https://openclipart.org/download/239443/path-line.svg",
     desc: "Connect the dots in order.",
     render: renderTraceLineGame
   },
   {
-    id: "makedot", label: "Make a Shape",
+    id: "makedot",
+    label: "Make a Shape",
     img: "https://openclipart.org/download/239406/geometric-shapes.svg",
     desc: "Connect dots to make a shape.",
     render: renderDotShapeGame
   },
   {
-    id: "sort", label: "Sort Animals",
+    id: "sort",
+    label: "Sort Animals",
     img: "https://openclipart.org/download/307309/arrows-sort.svg",
     desc: "Order from smallest to largest.",
     render: renderSortGame
   },
   {
-    id: "pattern", label: "Pattern Repeat",
+    id: "pattern",
+    label: "Pattern Repeat",
     img: "https://openclipart.org/download/320789/pattern-blocks.svg",
     desc: "Repeat the pattern!",
     render: renderPatternGame
   },
   {
-    id: "sound", label: "Sound Guess",
+    id: "sound",
+    label: "Sound Guess",
     img: "https://openclipart.org/download/242670/speaker.svg",
     desc: "Pick which animal makes this sound.",
     render: renderSoundGuessGame
   }
-);
+];
 </script>
 </body>
 </html>

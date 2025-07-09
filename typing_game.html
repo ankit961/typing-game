@@ -1,0 +1,512 @@
+<!--
+Toddler Typing Game – Single HTML File (No Emoji in Speech)
+Images: OpenMoji.org (CC BY-SA 4.0), hotlinked for demonstration.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Toddler Typing Game</title>
+  <meta name="color-scheme" content="light dark">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #21b3fd;
+      --secondary: #fff;
+      --accent: #f9b846;
+      --accent2: #fb6d6d;
+      --green: #60d394;
+      --pink: #ff90b3;
+      --purple: #ad9aff;
+      --progress-empty: #c0dbfc;
+      --progress-found: #34e08c;
+      --shadow: 0 4px 24px 0 rgba(33,179,253,0.09), 0 2px 8px 0 #ffc0cb0d;
+      --confetti-1: #fb6d6d;
+      --confetti-2: #34e08c;
+      --confetti-3: #f9b846;
+      --confetti-4: #ad9aff;
+      --confetti-5: #ff90b3;
+      --confetti-6: #21b3fd;
+      --text: #28344c;
+      --text-inverse: #fff;
+      --card: #fff7ef;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --secondary: #1d2235;
+        --card: #252941;
+        --text: #f3f6ff;
+        --progress-empty: #434862;
+      }
+    }
+    html, body {
+      height: 100%; margin: 0; padding: 0;
+      font-family: 'Baloo 2', 'Comic Sans MS', 'Comic Sans', Arial, sans-serif;
+      background: linear-gradient(180deg, #d0f3ff 0%, #fff7ef 100%);
+      min-width: 320px;
+      min-height: 100vh;
+      color: var(--text);
+    }
+    body { min-height: 100vh; margin: 0; }
+    main#app {
+      max-width: 420px;
+      width: 98vw;
+      margin: 2.5rem auto 1rem auto;
+      padding: 1.5rem 0.6rem 1.6rem 0.6rem;
+      background: var(--card);
+      border-radius: 2.6rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+    .cloud-bg {
+      width: 105vw; min-width: 400px;
+      position: absolute;
+      top: -52px; left: 50%; transform: translateX(-50%);
+      pointer-events: none; z-index: 0;
+    }
+    .cloud-bg svg {
+      width: 100%; height: 90px; display: block;
+    }
+    h1 {
+      font-family: 'Baloo 2', 'Comic Sans MS', 'Comic Sans', Arial, sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin: 0.2em 0 0.5em 0;
+      letter-spacing: 0.01em;
+      color: var(--primary);
+      text-align: center;
+      position: relative; z-index: 2;
+      text-shadow: 0 2px 12px #cbefff, 0 1px 0 #fff;
+    }
+    .progress-section {
+      display: flex; flex-direction: column; align-items: center;
+      margin: 0.6rem 0 1.1rem 0;
+      gap: 0.3rem;
+      z-index: 2;
+      width: 98%;
+    }
+    .progress-dots {
+      display: flex; flex-wrap: wrap; gap: 0.35rem 0.18rem;
+      justify-content: center; margin-bottom: 0.3rem;
+      max-width: 390px;
+    }
+    .progress-dot {
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: var(--progress-empty);
+      border: 2.2px solid #fff;
+      box-shadow: 0 1.2px 4px #e0e7ef91;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.04rem; font-weight: 700;
+      color: #bdd4fc;
+      transition: background 0.35s;
+      position: relative;
+      user-select: none;
+    }
+    .progress-dot.found {
+      background: var(--progress-found);
+      color: #31a871;
+      animation: popdot 0.2s cubic-bezier(0.4,1.8,0.6,1) 1;
+      border: 2.2px solid var(--green);
+    }
+    @keyframes popdot {
+      0% { transform: scale(1); }
+      60% { transform: scale(1.28); }
+      100% { transform: scale(1); }
+    }
+    .progress-counter {
+      font-size: 1.18rem;
+      color: var(--primary);
+      letter-spacing: 0.05em;
+      font-weight: 700;
+      text-align: center;
+      padding-top: 2px;
+    }
+    .feedback {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 210px;
+      width: 99%;
+      margin: 1.1rem 0 0.5rem 0;
+      position: relative;
+      z-index: 2;
+      outline: none;
+    }
+    .feedback-img {
+      width: 134px; height: 134px;
+      border-radius: 2rem;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.4em;
+      box-shadow: 0 4px 28px 0 rgba(33,179,253,0.13);
+      opacity: 0;
+      transform: scale(0.6) rotate(-9deg);
+      transition: opacity 0.38s, transform 0.44s cubic-bezier(.39,2.0,.47,1.15);
+      font-size: 5rem;
+      overflow: hidden;
+      border: 2.5px solid #e0e7ef;
+      background: linear-gradient(130deg, #fafcfd 60%, #e5f8ff 100%);
+      will-change: transform, opacity;
+    }
+    .feedback-img.show {
+      opacity: 1;
+      transform: scale(1.11) rotate(2deg);
+      animation: pop-letter 0.54s cubic-bezier(.41,1.6,.56,1.14) 1;
+    }
+    @keyframes pop-letter {
+      0% { transform: scale(0.7) rotate(-12deg);}
+      70% { transform: scale(1.13) rotate(4deg);}
+      100% { transform: scale(1.08) rotate(0deg);}
+    }
+    .feedback-word {
+      font-size: 1.55rem;
+      color: var(--accent2);
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      margin-bottom: 0.07em;
+      text-align: center;
+      min-height: 1.8em;
+      text-shadow: 0 2px 0 #fff, 0 1.2px 0 #ffe4e8;
+    }
+    .feedback-number {
+      font-size: 4.7rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 0.13em;
+      text-align: center;
+      letter-spacing: 0.04em;
+      opacity: 0;
+      min-height: 1.2em;
+      animation: none;
+      text-shadow: 0 2px 18px #fffdeebb, 0 1.4px 0 #ffd6e3;
+    }
+    .feedback-number.show {
+      opacity: 1;
+      animation: bounceNum 0.62s cubic-bezier(0.5,1.6,0.38,0.9) 1;
+    }
+    @keyframes bounceNum {
+      0% { transform: scale(0.75);}
+      60% { transform: scale(1.22);}
+      100% { transform: scale(1);}
+    }
+    .confetti {
+      position: fixed;
+      left: 0; top: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 30;
+      display: flex; align-items: center; justify-content: center;
+      overflow: visible;
+    }
+    .confetti > div {
+      position: absolute;
+      will-change: transform, opacity;
+      pointer-events: none;
+      font-size: 2.4rem;
+      text-shadow: 0 1.5px 0 #fff, 0 1px 8px #eee;
+      filter: drop-shadow(0 1px 4px #fff);
+    }
+    .play-again-btn {
+      margin: 1.4rem auto 0.2rem auto;
+      padding: 1.1em 2.3em 1.1em 2.3em;
+      border-radius: 2em;
+      font-size: 1.22rem;
+      font-weight: 700;
+      background: linear-gradient(90deg,#21b3fd 20%,#6aebbf 100%);
+      color: var(--text-inverse);
+      border: none;
+      box-shadow: 0 2px 12px 0 rgba(33,179,253,0.13);
+      cursor: pointer;
+      outline: none;
+      letter-spacing: 0.02em;
+      transition: background 0.22s, color 0.16s;
+      z-index: 2;
+      position: relative;
+      display: inline-flex; align-items: center; gap: 0.5em;
+    }
+    .play-again-btn:focus, .play-again-btn:hover {
+      background: linear-gradient(90deg, #34e08c 20%, #fb6d6d 100%);
+      color: #fff;
+    }
+    .play-again-btn span { font-size: 1.25em;}
+    .progress-dot:focus, .feedback:focus, .play-again-btn:focus {
+      outline: 2.5px solid var(--purple);
+      outline-offset: 3px;
+      z-index: 3;
+      position: relative;
+    }
+    @media (max-width: 580px) {
+      main#app {
+        max-width: 100vw;
+        border-radius: 1.1rem;
+        padding: 0.6rem 0.07rem 1.1rem 0.07rem;
+      }
+      .feedback-img {
+        width: 78px; height: 78px; font-size: 2.7rem;
+      }
+      .feedback-number {
+        font-size: 2.4rem;
+      }
+      h1 { font-size: 1.1rem; }
+      .progress-dot { width: 18px; height: 18px; font-size: 0.89rem;}
+    }
+  </style>
+  <!-- Audio assets (replace with your own base64 or link for prod) -->
+  <audio id="clickSound" preload="auto" aria-hidden="true">
+    <source src="data:audio/mp3;base64,//uQxA....[TRUNCATED]" type="audio/mp3" />
+  </audio>
+  <audio id="dingSound" preload="auto" aria-hidden="true">
+    <source src="https://cdn.pixabay.com/audio/2022/07/26/audio_124bfa60c8.mp3" type="audio/mp3" />
+  </audio>
+</head>
+<body>
+  <main id="app" aria-label="Toddler Typing Game">
+    <div class="cloud-bg" aria-hidden="true">
+      <svg viewBox="0 0 480 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="100" cy="50" rx="85" ry="28" fill="#fff" opacity="0.82"/>
+        <ellipse cx="190" cy="40" rx="52" ry="20" fill="#d0f3ff"/>
+        <ellipse cx="250" cy="63" rx="97" ry="32" fill="#fff"/>
+        <ellipse cx="390" cy="48" rx="73" ry="25" fill="#f9b846" opacity="0.11"/>
+        <ellipse cx="390" cy="68" rx="72" ry="19" fill="#f9b846" opacity="0.14"/>
+        <ellipse cx="440" cy="37" rx="31" ry="13" fill="#e8fff2"/>
+      </svg>
+    </div>
+    <h1 aria-label="Toddler Typing Game"><span aria-hidden="true">🎈</span> Toddler Typing Game <span aria-hidden="true">☁️</span></h1>
+    <section class="progress-section">
+      <div class="progress-dots" role="list" aria-label="Discovered letters and numbers"></div>
+      <div class="progress-counter" aria-live="polite">0 / 36 keys discovered</div>
+    </section>
+    <section class="feedback" tabindex="0" aria-live="polite" aria-atomic="true">
+      <div class="feedback-img" aria-label="Image for letter" style="display:none"></div>
+      <div class="feedback-word" aria-label="Word"></div>
+      <div class="feedback-number"></div>
+    </section>
+    <button class="play-again-btn" style="display:none" aria-label="Play again"><span>🔄</span> Play again!</button>
+  </main>
+  <div class="confetti" aria-hidden="true" style="display:none"></div>
+  <script>
+    (function() {
+      "use strict";
+
+      // OpenMoji (CC BY-SA 4.0)
+      const openmoji = code => `https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/${code}.svg`;
+
+      // No emoji in audioText:
+      const alphabetMap = {
+        "A": { word: "Apple", imageSrc: openmoji('1F34E'), audioText: "A for apple" },
+        "B": { word: "Bear", imageSrc: openmoji('1F43B'), audioText: "B for bear" },
+        "C": { word: "Cat", imageSrc: openmoji('1F431'), audioText: "C for cat" },
+        "D": { word: "Dog", imageSrc: openmoji('1F436'), audioText: "D for dog" },
+        "E": { word: "Elephant", imageSrc: openmoji('1F418'), audioText: "E for elephant" },
+        "F": { word: "Frog", imageSrc: openmoji('1F438'), audioText: "F for frog" },
+        "G": { word: "Giraffe", imageSrc: openmoji('1F992'), audioText: "G for giraffe" },
+        "H": { word: "House", imageSrc: openmoji('1F3E0'), audioText: "H for house" },
+        "I": { word: "Ice Cream", imageSrc: openmoji('1F366'), audioText: "I for ice cream" },
+        "J": { word: "Jellyfish", imageSrc: openmoji('1FABC'), audioText: "J for jellyfish" },
+        "K": { word: "Kangaroo", imageSrc: openmoji('1F998'), audioText: "K for kangaroo" },
+        "L": { word: "Lion", imageSrc: openmoji('1F981'), audioText: "L for lion" },
+        "M": { word: "Monkey", imageSrc: openmoji('1F412'), audioText: "M for monkey" },
+        "N": { word: "Nest", imageSrc: openmoji('1FAB9'), audioText: "N for nest" },
+        "O": { word: "Octopus", imageSrc: openmoji('1F419'), audioText: "O for octopus" },
+        "P": { word: "Penguin", imageSrc: openmoji('1F427'), audioText: "P for penguin" },
+        "Q": { word: "Queen", imageSrc: openmoji('1F478'), audioText: "Q for queen" },
+        "R": { word: "Rabbit", imageSrc: openmoji('1F430'), audioText: "R for rabbit" },
+        "S": { word: "Sun", imageSrc: openmoji('2600'), audioText: "S for sun" },
+        "T": { word: "Tiger", imageSrc: openmoji('1F42F'), audioText: "T for tiger" },
+        "U": { word: "Umbrella", imageSrc: openmoji('2602'), audioText: "U for umbrella" },
+        "V": { word: "Violin", imageSrc: openmoji('1F3BB'), audioText: "V for violin" },
+        "W": { word: "Whale", imageSrc: openmoji('1F433'), audioText: "W for whale" },
+        "X": { word: "Xylophone", imageSrc: openmoji('1FA97'), audioText: "X for xylophone" },
+        "Y": { word: "Yacht", imageSrc: openmoji('26F5'), audioText: "Y for yacht" },
+        "Z": { word: "Zebra", imageSrc: openmoji('1F993'), audioText: "Z for zebra" }
+      };
+      const numberMap = {
+        "0": openmoji('0030-20E3'),
+        "1": openmoji('0031-20E3'),
+        "2": openmoji('0032-20E3'),
+        "3": openmoji('0033-20E3'),
+        "4": openmoji('0034-20E3'),
+        "5": openmoji('0035-20E3'),
+        "6": openmoji('0036-20E3'),
+        "7": openmoji('0037-20E3'),
+        "8": openmoji('0038-20E3'),
+        "9": openmoji('0039-20E3')
+      };
+
+      const TOTAL_KEYS = 36;
+      const keySet = new Set([
+        ...Array.from({length: 26}, (_, i) => String.fromCharCode(65 + i)),
+        ...Array.from({length: 10}, (_, i) => String(i))
+      ]);
+      const keyOrder = [
+        ..."ABCDEFGHIJKLMNOPQRSTUVWXYZ", "0","1","2","3","4","5","6","7","8","9"
+      ];
+
+      const $ = sel => document.querySelector(sel);
+      const progressDotsDiv = $('.progress-dots');
+      const progressCounter = $('.progress-counter');
+      const feedbackSection = $('.feedback');
+      const feedbackImg = $('.feedback-img');
+      const feedbackWord = $('.feedback-word');
+      const feedbackNumber = $('.feedback-number');
+      const confettiDiv = $('.confetti');
+      const playAgainBtn = $('.play-again-btn');
+      const clickSound = $('#clickSound');
+      const dingSound = $('#dingSound');
+
+      let discoveredKeys = new Set();
+      let lastFeedback = { type: '', value: '' };
+
+      function updateProgress() {
+        progressDotsDiv.innerHTML = '';
+        for (let key of keyOrder) {
+          const dot = document.createElement('div');
+          dot.className = 'progress-dot' + (discoveredKeys.has(key) ? ' found' : '');
+          dot.innerText = key;
+          dot.setAttribute('tabindex', '-1');
+          dot.setAttribute('role','listitem');
+          dot.setAttribute('aria-label', discoveredKeys.has(key) ? `${key}: found` : `${key}: not found`);
+          progressDotsDiv.appendChild(dot);
+        }
+        const val = discoveredKeys.size;
+        progressCounter.innerText = `${val} / 36 keys discovered`;
+      }
+      function showLetterFeedback(letter) {
+        const data = alphabetMap[letter] || {};
+        let imgSrc = data.imageSrc;
+        feedbackImg.innerHTML = imgSrc
+          ? `<img src="${imgSrc}" alt="${data.word||letter}" width="128" height="128" style="width:100%;height:100%;object-fit:contain;" loading="eager" />`
+          : `<span style="font-size:5rem;">${letter}</span>`;
+        feedbackImg.style.display = "";
+        feedbackImg.classList.remove('show');
+        setTimeout(() => feedbackImg.classList.add('show'), 12);
+        feedbackWord.innerText = data.word || "";
+        feedbackNumber.classList.remove('show');
+        feedbackNumber.innerText = '';
+        speakText(data.audioText || `${letter}`);
+        lastFeedback = { type: "letter", value: letter };
+      }
+      function showNumberFeedback(num) {
+        feedbackImg.innerHTML = `<img src="${numberMap[num]}" alt="${num}" width="96" height="96" style="width:72%;height:72%;object-fit:contain;" loading="eager" />`;
+        feedbackImg.style.display = "";
+        feedbackImg.classList.add('show');
+        feedbackWord.innerText = '';
+        feedbackNumber.innerText = num;
+        feedbackNumber.classList.add('show');
+        speakText(`${num}`);
+        lastFeedback = { type: "number", value: num };
+      }
+      function clearFeedback() {
+        feedbackImg.style.display = "none";
+        feedbackImg.classList.remove('show');
+        feedbackWord.innerText = '';
+        feedbackNumber.innerText = '';
+        feedbackNumber.classList.remove('show');
+        lastFeedback = { type: '', value: '' };
+      }
+      function maybeShowPlayAgain() {
+        if (discoveredKeys.size === TOTAL_KEYS) {
+          setTimeout(() => {
+            playAgainBtn.style.display = "";
+            playAgainBtn.focus();
+            showConfetti();
+          }, 550);
+        }
+      }
+      function playSound(audioElem) {
+        try { audioElem.currentTime = 0; audioElem.play(); } catch {}
+      }
+      function speakText(text) {
+        try {
+          window.speechSynthesis.cancel();
+          if (!text) return;
+          const u = new window.SpeechSynthesisUtterance(text);
+          u.rate = 0.98;
+          u.pitch = 1.05;
+          u.lang = 'en-US';
+          window.speechSynthesis.speak(u);
+        } catch {}
+      }
+      function showConfetti() {
+        confettiDiv.style.display = "flex";
+        confettiDiv.innerHTML = '';
+        const colors = [
+          'var(--confetti-1)', 'var(--confetti-2)', 'var(--confetti-3)', 'var(--confetti-4)',
+          'var(--confetti-5)', 'var(--confetti-6)'
+        ];
+        const EMOJI = ['🎈','🎉','✨','🎊','🥳','☁️','🧸','🍭','🦒','🐶','🐱'];
+        const N = 42;
+        for (let i = 0; i < N; ++i) {
+          const div = document.createElement('div');
+          div.style.left = `${Math.random() * 100}%`;
+          div.style.top = `${8+Math.random()*38}%`;
+          div.style.fontSize = `${24 + Math.random() * 44}px`;
+          div.style.color = colors[Math.floor(Math.random()*colors.length)];
+          div.innerText = EMOJI[Math.floor(Math.random()*EMOJI.length)];
+          confettiDiv.appendChild(div);
+          setTimeout(() => {
+            div.style.transform = `translateY(${120 + Math.random()*260}px) rotate(${Math.random()*360}deg)`;
+            div.style.opacity = '0.0';
+          }, 35 + i*18);
+        }
+        setTimeout(() => { confettiDiv.style.display="none"; }, 2300);
+      }
+      function onKey(e) {
+        if (e.repeat) return;
+        let key = e.key.toUpperCase();
+        if (!keySet.has(key)) return;
+        e.preventDefault();
+        if (!discoveredKeys.has(key)) {
+          discoveredKeys.add(key);
+          updateProgress();
+        }
+        if (key >= "A" && key <= "Z") {
+          playSound(clickSound);
+          showLetterFeedback(key);
+        } else if (key >= "0" && key <= "9") {
+          playSound(dingSound);
+          showNumberFeedback(key);
+        }
+        maybeShowPlayAgain();
+      }
+      function resetGame() {
+        discoveredKeys.clear();
+        updateProgress();
+        clearFeedback();
+        playAgainBtn.style.display = "none";
+        feedbackSection.focus();
+      }
+      document.addEventListener("keydown", onKey, { passive: false });
+      playAgainBtn.addEventListener('click', resetGame);
+      playAgainBtn.addEventListener('keydown', e => {
+        if (e.key === "Enter" || e.key === " ") resetGame();
+      });
+      feedbackSection.addEventListener('click', () => feedbackSection.focus());
+      feedbackSection.setAttribute("tabindex", "0");
+      playAgainBtn.setAttribute("tabindex", "0");
+      updateProgress();
+      resetGame();
+      document.body.addEventListener('mousedown', e => document.body.classList.add('mouse-nav'));
+      document.body.addEventListener('keydown', e => document.body.classList.remove('mouse-nav'));
+    })();
+  </script>
+  <!--
+  =================== README ===================
+  Toddler Typing Game (Single File, OpenMoji.org)
+
+  • Kid-safe, no emoji in speech. Type A–Z or 0–9 to see & hear the word and picture for each.
+  • All SVG images from OpenMoji.org (CC BY-SA 4.0). Please credit OpenMoji if distributing.
+  • All code, assets, and instructions included. No dependencies. Open in any modern browser.
+
+  MIT License – Free for all personal/educational use.
+  ==============================================
+  -->
+</body>
+</html>

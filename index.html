@@ -1,14 +1,17 @@
 <!--
-Toddler Typing Game – Single HTML File (No Emoji in Speech)
-Images: OpenMoji.org (CC BY-SA 4.0), hotlinked for demonstration.
+Toddler Typing Game (Mobile/Tablet Friendly)
+- Responsive for all screens.
+- "Tap to Start" overlays on mobile/tablet; shows system keyboard on tap.
+- Hidden input captures key events for touch devices.
+- Desktop: works with hardware keyboard as before.
+- OpenMoji images (CC BY-SA 4.0). No emojis in speech.
 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
   <title>Toddler Typing Game</title>
-  <meta name="color-scheme" content="light dark">
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -47,11 +50,13 @@ Images: OpenMoji.org (CC BY-SA 4.0), hotlinked for demonstration.
       min-width: 320px;
       min-height: 100vh;
       color: var(--text);
+      overscroll-behavior: none;
+      -webkit-tap-highlight-color: transparent;
     }
     body { min-height: 100vh; margin: 0; }
     main#app {
       max-width: 420px;
-      width: 98vw;
+      width: 99vw;
       margin: 2.5rem auto 1rem auto;
       padding: 1.5rem 0.6rem 1.6rem 0.6rem;
       background: var(--card);
@@ -242,23 +247,54 @@ Images: OpenMoji.org (CC BY-SA 4.0), hotlinked for demonstration.
       z-index: 3;
       position: relative;
     }
-    @media (max-width: 580px) {
-      main#app {
-        max-width: 100vw;
-        border-radius: 1.1rem;
-        padding: 0.6rem 0.07rem 1.1rem 0.07rem;
-      }
-      .feedback-img {
-        width: 78px; height: 78px; font-size: 2.7rem;
-      }
-      .feedback-number {
-        font-size: 2.4rem;
-      }
-      h1 { font-size: 1.1rem; }
-      .progress-dot { width: 18px; height: 18px; font-size: 0.89rem;}
+    /* Overlay for mobile/tablet tap-to-start */
+    .mobile-overlay {
+      display: none;
+      position: fixed; left:0; top:0; width:100vw; height:100vh;
+      background: rgba(255,255,255,0.87);
+      z-index:100;
+      align-items:center; justify-content:center;
+      flex-direction: column;
+      transition: opacity 0.3s;
+      font-family: inherit;
+    }
+    .mobile-overlay.show {
+      display:flex;
+      animation: fadeIn 0.6s;
+    }
+    @keyframes fadeIn { 0% {opacity:0} 100%{opacity:1} }
+    .mobile-overlay .start-btn {
+      padding: 1.1em 2.4em;
+      font-size: 1.34rem;
+      background: linear-gradient(90deg, #34e08c 20%, #21b3fd 100%);
+      color: #fff;
+      border-radius: 2.5em;
+      border: none;
+      font-weight: 700;
+      margin-top: 1.3em;
+      box-shadow: 0 4px 22px #21b3fd22;
+      cursor: pointer;
+      outline: none;
+    }
+    .mobile-overlay .start-btn:focus, .mobile-overlay .start-btn:hover {
+      background: linear-gradient(90deg,#21b3fd 20%,#fb6d6d 100%);
+    }
+    .mobile-overlay .emoji {
+      font-size: 4rem;
+      margin-bottom: 0.6em;
+      text-shadow: 0 4px 24px #b9f5ff;
+    }
+    /* Hidden input for mobile typing */
+    #hidden-input {
+      position: absolute; left:-9999px; opacity:0; pointer-events:none;
+      width:1px; height:1px;
+    }
+    @media (max-width: 700px) {
+      main#app { padding: 0.7rem 0.05rem 1.2rem 0.05rem; }
+      .feedback-img { width: 82px; height: 82px; font-size: 2.6rem; }
+      .progress-dot { width: 19px; height: 19px; font-size: 1rem;}
     }
   </style>
-  <!-- Audio assets (replace with your own base64 or link for prod) -->
   <audio id="clickSound" preload="auto" aria-hidden="true">
     <source src="data:audio/mp3;base64,//uQxA....[TRUNCATED]" type="audio/mp3" />
   </audio>
@@ -267,6 +303,15 @@ Images: OpenMoji.org (CC BY-SA 4.0), hotlinked for demonstration.
   </audio>
 </head>
 <body>
+  <!-- Hidden input for mobile typing -->
+  <input id="hidden-input" type="text" maxlength="1" autocomplete="off" autocapitalize="characters" spellcheck="false" />
+  <!-- Mobile overlay: tap to start -->
+  <div class="mobile-overlay" id="mobileOverlay" style="display:none;">
+    <div class="emoji" aria-hidden="true">👆</div>
+    <div style="font-size:1.25rem;text-align:center;color:#21b3fd;font-weight:700;">Tap here to Start!</div>
+    <button class="start-btn" id="startBtn" aria-label="Start Typing">Start Typing!</button>
+    <div style="font-size:1.01rem;color:#888;margin-top:1.8em;text-align:center;">Use your tablet/phone keyboard</div>
+  </div>
   <main id="app" aria-label="Toddler Typing Game">
     <div class="cloud-bg" aria-hidden="true">
       <svg viewBox="0 0 480 90" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -294,11 +339,7 @@ Images: OpenMoji.org (CC BY-SA 4.0), hotlinked for demonstration.
   <script>
     (function() {
       "use strict";
-
-      // OpenMoji (CC BY-SA 4.0)
       const openmoji = code => `https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/${code}.svg`;
-
-      // No emoji in audioText:
       const alphabetMap = {
         "A": { word: "Apple", imageSrc: openmoji('1F34E'), audioText: "A for apple" },
         "B": { word: "Bear", imageSrc: openmoji('1F43B'), audioText: "B for bear" },
@@ -339,7 +380,6 @@ Images: OpenMoji.org (CC BY-SA 4.0), hotlinked for demonstration.
         "8": openmoji('0038-20E3'),
         "9": openmoji('0039-20E3')
       };
-
       const TOTAL_KEYS = 36;
       const keySet = new Set([
         ...Array.from({length: 26}, (_, i) => String.fromCharCode(65 + i)),
@@ -360,9 +400,11 @@ Images: OpenMoji.org (CC BY-SA 4.0), hotlinked for demonstration.
       const playAgainBtn = $('.play-again-btn');
       const clickSound = $('#clickSound');
       const dingSound = $('#dingSound');
+      const hiddenInput = $('#hidden-input');
+      const mobileOverlay = $('#mobileOverlay');
+      const startBtn = $('#startBtn');
 
       let discoveredKeys = new Set();
-      let lastFeedback = { type: '', value: '' };
 
       function updateProgress() {
         progressDotsDiv.innerHTML = '';
@@ -391,7 +433,6 @@ Images: OpenMoji.org (CC BY-SA 4.0), hotlinked for demonstration.
         feedbackNumber.classList.remove('show');
         feedbackNumber.innerText = '';
         speakText(data.audioText || `${letter}`);
-        lastFeedback = { type: "letter", value: letter };
       }
       function showNumberFeedback(num) {
         feedbackImg.innerHTML = `<img src="${numberMap[num]}" alt="${num}" width="96" height="96" style="width:72%;height:72%;object-fit:contain;" loading="eager" />`;
@@ -401,7 +442,6 @@ Images: OpenMoji.org (CC BY-SA 4.0), hotlinked for demonstration.
         feedbackNumber.innerText = num;
         feedbackNumber.classList.add('show');
         speakText(`${num}`);
-        lastFeedback = { type: "number", value: num };
       }
       function clearFeedback() {
         feedbackImg.style.display = "none";
@@ -409,7 +449,6 @@ Images: OpenMoji.org (CC BY-SA 4.0), hotlinked for demonstration.
         feedbackWord.innerText = '';
         feedbackNumber.innerText = '';
         feedbackNumber.classList.remove('show');
-        lastFeedback = { type: '', value: '' };
       }
       function maybeShowPlayAgain() {
         if (discoveredKeys.size === TOTAL_KEYS) {
@@ -458,7 +497,48 @@ Images: OpenMoji.org (CC BY-SA 4.0), hotlinked for demonstration.
         }
         setTimeout(() => { confettiDiv.style.display="none"; }, 2300);
       }
-      function onKey(e) {
+
+      // === INPUT HANDLING: Desktop (keyboard) vs. Mobile/Tablet (input) ===
+      function isMobileDevice() {
+        // Tablet/phone detection: userAgent (best effort, not 100% accurate)
+        return /Android|iPhone|iPad|iPod|Mobile|Tablet|Silk|Opera Mini|webOS|IEMobile|BlackBerry|Windows Phone/i.test(navigator.userAgent);
+      }
+      function enableMobileMode() {
+        mobileOverlay.classList.add('show');
+        mobileOverlay.style.display = "flex";
+      }
+      function startMobileTyping() {
+        // Focus the hidden input to pop keyboard
+        mobileOverlay.classList.remove('show');
+        mobileOverlay.style.display = "none";
+        setTimeout(() => {
+          hiddenInput.value = '';
+          hiddenInput.focus();
+        }, 120);
+      }
+      function onMobileInput(e) {
+        const val = hiddenInput.value.toUpperCase();
+        if (!val || !keySet.has(val)) {
+          hiddenInput.value = ''; // clear invalid char
+          return;
+        }
+        if (!discoveredKeys.has(val)) {
+          discoveredKeys.add(val);
+          updateProgress();
+        }
+        if (val >= "A" && val <= "Z") {
+          playSound(clickSound);
+          showLetterFeedback(val);
+        } else if (val >= "0" && val <= "9") {
+          playSound(dingSound);
+          showNumberFeedback(val);
+        }
+        maybeShowPlayAgain();
+        // Reset for next key
+        hiddenInput.value = '';
+      }
+
+      function onDesktopKey(e) {
         if (e.repeat) return;
         let key = e.key.toUpperCase();
         if (!keySet.has(key)) return;
@@ -481,29 +561,43 @@ Images: OpenMoji.org (CC BY-SA 4.0), hotlinked for demonstration.
         updateProgress();
         clearFeedback();
         playAgainBtn.style.display = "none";
-        feedbackSection.focus();
+        if (isMobileDevice()) {
+          enableMobileMode();
+        } else {
+          feedbackSection.focus();
+        }
       }
-      document.addEventListener("keydown", onKey, { passive: false });
+      // === INIT EVENTS ===
       playAgainBtn.addEventListener('click', resetGame);
       playAgainBtn.addEventListener('keydown', e => {
         if (e.key === "Enter" || e.key === " ") resetGame();
       });
       feedbackSection.addEventListener('click', () => feedbackSection.focus());
+      hiddenInput.addEventListener('input', onMobileInput);
+      if (isMobileDevice()) {
+        enableMobileMode();
+        startBtn.addEventListener('click', startMobileTyping);
+        mobileOverlay.addEventListener('click', function(ev) {
+          if (ev.target === mobileOverlay) startMobileTyping();
+        });
+        // Remove desktop keyboard listener
+      } else {
+        document.addEventListener("keydown", onDesktopKey, { passive: false });
+        hiddenInput.style.display = "none";
+      }
       feedbackSection.setAttribute("tabindex", "0");
       playAgainBtn.setAttribute("tabindex", "0");
       updateProgress();
       resetGame();
-      document.body.addEventListener('mousedown', e => document.body.classList.add('mouse-nav'));
-      document.body.addEventListener('keydown', e => document.body.classList.remove('mouse-nav'));
     })();
   </script>
   <!--
   =================== README ===================
-  Toddler Typing Game (Single File, OpenMoji.org)
+  Toddler Typing Game – Mobile & Tablet Friendly
 
-  • Kid-safe, no emoji in speech. Type A–Z or 0–9 to see & hear the word and picture for each.
-  • All SVG images from OpenMoji.org (CC BY-SA 4.0). Please credit OpenMoji if distributing.
-  • All code, assets, and instructions included. No dependencies. Open in any modern browser.
+  - Kid-safe, responsive, fun: works on all screens.
+  - On mobile/tablet, a "Tap to Start" pops the device keyboard for input!
+  - Desktop: type as usual. All images: OpenMoji.org (CC BY-SA 4.0).
 
   MIT License – Free for all personal/educational use.
   ==============================================

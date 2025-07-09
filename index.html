@@ -475,6 +475,9 @@ function renderMatchingGame(el) {
   const resetBtn = el.querySelector('#match-reset');
   let matched = 0;
   let draggingCard = null;
+  let selectedCard = null;
+
+  // Desktop: drag-and-drop
   cards.forEach(card => {
     card.addEventListener('dragstart', e=>{
       draggingCard = card; card.classList.add('dragging');
@@ -482,108 +485,59 @@ function renderMatchingGame(el) {
     card.addEventListener('dragend', e=>{
       draggingCard = null; card.classList.remove('dragging');
     });
-    card.addEventListener('touchstart', function(e) {
-      draggingCard = card; card.classList.add('dragging');
-      card.style.zIndex = 20;
-    });
-    card.addEventListener('touchend', function(e) {
-      card.classList.remove('dragging');
-      card.style.zIndex = '';
-      draggingCard = null;
-    });
-    card.addEventListener('click', function() {
-      // for accessibility, let kids "tap" then tap target.
-      if (cards.some(c=>c.classList.contains('selected'))) {
-        cards.forEach(c=>c.classList.remove('selected'));
-      }
-      card.classList.add('selected');
-    });
   });
-  function successVoice(letter, word) {
-    speak(`You are right! ${letter} for ${word}`);
-  }
   drops.forEach(drop => {
     drop.addEventListener('dragover', e => { e.preventDefault(); });
     drop.addEventListener('drop', e => {
       if (!draggingCard) return;
-      const letter = draggingCard.dataset.letter;
-      const word = alphabetData.find(d=>d.letter===letter)?.word || "";
-      if (drop.dataset.letter === letter && !drop.classList.contains('matched')) {
-        drop.classList.add('matched');
-        draggingCard.style.visibility = 'hidden';
-        matched++;
-        feedback.innerHTML = `<span class="celebrate">${confettiEmojis[Math.floor(Math.random()*confettiEmojis.length)]} Well done!</span>`;
-        playSound(cheerSound);
-        showConfetti();
-        successVoice(letter, word);
-        if (matched === choices.length) {
-          setTimeout(()=>{feedback.innerHTML = `<span class="celebrate">🎉 You matched all! 🎉</span>`; playSound(cheerSound); resetBtn.style.display="flex";},700);
-        }
-      } else {
-        feedback.innerHTML = `<span style="color:#fb6d6d;font-size:1em;">Try again!</span>`;
-        speak("Try again!");
-        playSound(clickSound);
-      }
+      matchAttempt(draggingCard, drop);
       draggingCard.classList.remove('dragging');
       draggingCard = null;
-    });
-    drop.addEventListener('touchmove', e=>{e.preventDefault();});
-    drop.addEventListener('touchend', e => {
-      if (!draggingCard) return;
-      const touch = e.changedTouches[0];
-      const dropRect = drop.getBoundingClientRect();
-      const letter = draggingCard.dataset.letter;
-      const word = alphabetData.find(d=>d.letter===letter)?.word || "";
-      if (
-        touch.clientX >= dropRect.left && touch.clientX <= dropRect.right &&
-        touch.clientY >= dropRect.top && touch.clientY <= dropRect.bottom
-      ) {
-        if (drop.dataset.letter === letter && !drop.classList.contains('matched')) {
-          drop.classList.add('matched');
-          draggingCard.style.visibility = 'hidden';
-          matched++;
-          feedback.innerHTML = `<span class="celebrate">${confettiEmojis[Math.floor(Math.random()*confettiEmojis.length)]} Well done!</span>`;
-          playSound(cheerSound);
-          showConfetti();
-          successVoice(letter, word);
-          if (matched === choices.length) {
-            setTimeout(()=>{feedback.innerHTML = `<span class="celebrate">🎉 You matched all! 🎉</span>`; playSound(cheerSound); resetBtn.style.display="flex";},700);
-          }
-        } else {
-          feedback.innerHTML = `<span style="color:#fb6d6d;font-size:1em;">Try again!</span>`;
-          speak("Try again!");
-          playSound(clickSound);
-        }
-      }
-      draggingCard.classList.remove('dragging');
-      draggingCard = null;
-    });
-    drop.addEventListener('click', function() {
-      // for accessibility, let kids tap target after selecting card
-      let sel = cards.find(c=>c.classList.contains('selected'));
-      const letter = sel?.dataset.letter;
-      const word = alphabetData.find(d=>d.letter===letter)?.word || "";
-      if (sel && drop.dataset.letter === letter && !drop.classList.contains('matched')) {
-        drop.classList.add('matched');
-        sel.style.visibility = 'hidden';
-        matched++;
-        feedback.innerHTML = `<span class="celebrate">${confettiEmojis[Math.floor(Math.random()*confettiEmojis.length)]} Well done!</span>`;
-        playSound(cheerSound);
-        showConfetti();
-        successVoice(letter, word);
-        if (matched === choices.length) {
-          setTimeout(()=>{feedback.innerHTML = `<span class="celebrate">🎉 You matched all! 🎉</span>`; playSound(cheerSound); resetBtn.style.display="flex";},700);
-        }
-      } else if (sel) {
-        feedback.innerHTML = `<span style="color:#fb6d6d;font-size:1em;">Try again!</span>`;
-        speak("Try again!");
-        playSound(clickSound);
-      }
-      cards.forEach(c=>c.classList.remove('selected'));
     });
   });
-  resetBtn.addEventListener('click', ()=>renderMatchingGame(el));
+
+  // Mobile/tablet: tap card, then tap drop
+  cards.forEach(card => {
+    card.addEventListener('click', function() {
+      if (card.style.visibility === 'hidden') return;
+      cards.forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      selectedCard = card;
+    });
+  });
+  drops.forEach(drop => {
+    drop.addEventListener('click', function() {
+      if (!selectedCard || selectedCard.style.visibility === 'hidden') return;
+      matchAttempt(selectedCard, drop);
+      selectedCard.classList.remove('selected');
+      selectedCard = null;
+    });
+  });
+
+  function matchAttempt(card, drop) {
+    if (drop.classList.contains('matched')) return;
+    const letter = card.dataset.letter;
+    const word = alphabetData.find(d=>d.letter===letter)?.word || "";
+    if (drop.dataset.letter === letter) {
+      drop.classList.add('matched');
+      card.style.visibility = 'hidden';
+      matched++;
+      feedback.innerHTML = `<span class="celebrate">${confettiEmojis[Math.floor(Math.random()*confettiEmojis.length)]} Well done!</span>`;
+      playSound(cheerSound);
+      showConfetti();
+      speak(`You are right! ${letter} for ${word}`);
+      if (matched === choices.length) {
+        setTimeout(()=>{feedback.innerHTML = `<span class="celebrate">🎉 You matched all! 🎉</span>`; playSound(cheerSound); resetBtn.style.display="flex";},700);
+      }
+    } else {
+      feedback.innerHTML = `<span style="color:#fb6d6d;font-size:1em;">Try again!</span>`;
+      speak("Try again!");
+      playSound(clickSound);
+    }
+  }
+  resetBtn.addEventListener('click',()=>renderMatchingGame(el));
 }
+
 /* ===== Counting Game ===== */
 function renderCountingGame(el) {
   const objects = [

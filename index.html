@@ -2,38 +2,38 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Toddler Playground – 12 Learning Games</title>
+  <title>Toddler Playground – 12 Fun Learning Games</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-  <meta name="description" content="12 beautiful, mobile-friendly learning games for toddlers: typing, matching, counting, color, shape, memory, sorting, drawing and more. Polished UI, voice feedback, and SVG images!" />
-  <meta name="keywords" content="toddler, educational games, learning, interactive, typing, matching, counting, color, shape, memory, mobile-friendly, openmoji" />
-  <meta name="robots" content="index, follow" />
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&display=swap" rel="stylesheet">
+  <meta name="description" content="Beautiful, mobile-friendly, emoji-free learning games for toddlers: typing, matching, counting, colors, memory, sorting and more. High-quality illustrations, sound, and playful UI!" />
+  <meta name="keywords" content="toddler, educational games, learning, interactive, typing, matching, counting, color, memory, mobile-friendly" />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&family=Comic+Neue:wght@700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #21b3fd;
-      --accent: #f9b846;
-      --accent2: #fb6d6d;
+      --primary: #29aafc;
+      --accent: #fed766;
+      --accent2: #f76e6e;
       --green: #60d394;
-      --purple: #ad9aff;
-      --bg1: #e7f6fe;
-      --bg2: #fffaf4;
-      --text: #28344c;
+      --purple: #b17acc;
+      --bg1: #f9f7f6;
+      --bg2: #fffdf7;
+      --text: #353746;
       --card: #fff;
-      --tab: #f1f9fd;
-      --tab-active: #bdeaff;
+      --tab: #e9f8fe;
+      --tab-active: #d1f0fa;
       --shadow: 0 4px 24px 0 rgba(33,179,253,0.09), 0 2px 8px 0 #ffc0cb0d;
     }
     html, body {
       min-width: 320px;
       min-height: 100vh;
-      font-family: 'Baloo 2', Arial, sans-serif;
+      font-family: 'Baloo 2', 'Comic Neue', Arial, sans-serif;
       background: linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 100%);
       color: var(--text);
       margin: 0; padding: 0;
       overscroll-behavior: none;
+      font-size: 18px;
     }
     #app-wrapper {
-      max-width: 590px;
+      max-width: 700px;
       margin: 1.2rem auto 1.2rem auto;
       padding: 1.3rem 0.5rem 2.1rem 0.5rem;
       border-radius: 2.6rem;
@@ -46,10 +46,12 @@
       text-align: center;
       font-size: 2.2rem;
       color: var(--primary);
-      margin-bottom: 1.2em;
-      margin-top: 0.5em;
-      font-weight: 900;
+      margin-bottom: 1.1em;
+      margin-top: 0.7em;
+      font-family: 'Comic Neue', 'Baloo 2', Arial, sans-serif;
       letter-spacing: 0.01em;
+      font-weight: 900;
+      text-shadow: 0 2px 10px #fff8, 0 1px 3px #bdeaff2f;
     }
     .home-list {
       display: flex;
@@ -61,45 +63,51 @@
       width: 100%;
     }
     .game-card {
-      background: #f1f9fd;
-      border-radius: 1.7em;
-      box-shadow: 0 2px 12px #e5f8ff;
+      background: linear-gradient(120deg, #ffeeb8 0%, #fdceff 100%);
+      border-radius: 2.4em;
+      box-shadow: 0 2px 16px #ffe49977, 0 2px 8px #c0f3fd12;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-width: 132px; min-height: 112px;
-      max-width: 164px;
-      flex: 1 1 42%;
+      min-width: 145px; min-height: 123px;
+      max-width: 184px;
+      flex: 1 1 43%;
       padding: 1em 0.4em 1em 0.4em;
       cursor: pointer;
       border: none;
       outline: none;
-      transition: box-shadow 0.15s, background 0.12s;
-      font-size: 1.12rem;
+      transition: box-shadow 0.18s, background 0.13s;
+      font-size: 1.13rem;
       font-weight: 700;
       color: var(--primary);
-      gap: 0.4em;
+      gap: 0.32em;
     }
     .game-card:active, .game-card.selected, .game-card:focus {
-      background: var(--tab-active);
+      background: linear-gradient(120deg, #fdceff 0%, #ffeeb8 100%);
       box-shadow: 0 4px 22px #bdeaff66;
       color: #1360a6;
       outline: 3px solid var(--primary);
     }
     .game-card .img-area {
-      width: 56px; height: 56px;
+      width: 72px; height: 72px;
       display: flex; align-items: center; justify-content: center;
-      margin-bottom: 0.15em;
+      margin-bottom: 0.12em;
+    }
+    .game-card .img-area img {
+      width: 72px; height: 72px; border-radius: 1.4em;
+      box-shadow: 0 2px 6px #fcfbe6;
+      background: #fffdfa;
+      object-fit: contain;
     }
     .game-content {
       width: 99%;
       min-height: 260px;
-      max-width: 540px;
+      max-width: 650px;
       margin: 0 auto 0.7em auto;
-      border-radius: 1.5em;
-      background: #f1f9fd;
-      box-shadow: 0 2px 14px #e5f8ff;
+      border-radius: 1.8em;
+      background: #f8fafd;
+      box-shadow: 0 2px 15px #fffbe7;
       padding: 0.1em 0.1em 1em 0.1em;
       position: relative;
     }
@@ -128,14 +136,15 @@
       color: var(--primary);
       flex: 1 1 auto;
       text-align: left;
+      font-family: 'Comic Neue', Arial, sans-serif;
     }
     .center-btn, .play-again-btn {
       margin: 1.1rem auto 0.2rem auto;
       padding: 1em 2.1em 1em 2.1em;
       border-radius: 2em;
-      font-size: 1.11rem;
+      font-size: 1.13rem;
       font-weight: 700;
-      background: linear-gradient(90deg,#21b3fd 20%,#6aebbf 100%);
+      background: linear-gradient(90deg,#29aafc 20%,#fed766 100%);
       color: #fff;
       border: none;
       box-shadow: 0 2px 12px 0 rgba(33,179,253,0.13);
@@ -146,16 +155,16 @@
       transition: background 0.19s, color 0.13s;
     }
     .option-btn, .shape-opt, .dot-btn, .memory-card {
-      border-radius: 1.1em;
-      font-size: 1.04rem;
+      border-radius: 1.2em;
+      font-size: 1.16rem;
       font-weight: 700;
       border: none;
       cursor: pointer;
       outline: none;
-      margin: 0.22em;
-      box-shadow: 0 2px 8px #e5f8ff;
-      min-width: 46px; min-height: 46px;
-      background: #fff;
+      margin: 0.26em;
+      box-shadow: 0 2px 8px #f8dcdc7f;
+      min-width: 56px; min-height: 56px;
+      background: #fffefa;
       display: flex; align-items: center; justify-content: center;
       transition: background 0.13s, color 0.11s;
     }
@@ -163,20 +172,21 @@
     .option-btn.correct, .shape-opt.correct, .memory-card.correct { background: var(--green); color: #fff; }
     .option-btn.incorrect, .shape-opt.incorrect, .memory-card.incorrect { background: var(--accent2); color: #fff; }
     .image-opt {
-      background: #fff;
-      box-shadow: 0 2px 8px #e5f8ff;
-      border-radius: 1.1em;
-      padding: 0.32em;
+      background: #fffefa;
+      box-shadow: 0 2px 8px #fffbe7;
+      border-radius: 1.2em;
+      padding: 0.42em;
       cursor: pointer;
       margin: 0.33em;
       transition: border 0.15s;
-      border: 2.3px solid #fff;
-      min-width: 58px; min-height: 58px;
+      border: 2.3px solid #fffefa;
+      min-width: 72px; min-height: 72px;
       display: flex; align-items: center; justify-content: center;
     }
     .image-opt.selected { border-color: var(--accent); }
     .image-opt.correct { border-color: var(--green); }
     .image-opt.incorrect { border-color: var(--accent2); opacity:0.55; }
+    .image-opt img { width:66px;height:66px;object-fit:contain;border-radius:1em;}
     .celebrate {
       font-size: 1.58rem;
       font-weight: bold;
@@ -185,21 +195,26 @@
       text-align: center;
       animation: pop-letter 0.7s cubic-bezier(.41,1.6,.56,1.14);
       text-shadow: 0 2px 12px #fff, 0 1px 8px #fff8;
+      font-family: 'Comic Neue', Arial, sans-serif;
     }
-    @keyframes pop-letter {
-      0% { transform: scale(0.6) rotate(-13deg);}
-      70% { transform: scale(1.12) rotate(7deg);}
-      100% { transform: scale(1.04) rotate(0deg);}
-    }
-    .confetti { position: fixed; left: 0; top: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 30; display: flex; align-items: center; justify-content: center; overflow: visible;}
-    .confetti > div { position: absolute; will-change: transform, opacity; pointer-events: none; font-size: 1.3rem; text-shadow: 0 1.5px 0 #fff, 0 1px 8px #eee; filter: drop-shadow(0 1px 4px #fff);}
-    @media (max-width: 700px) {
-      #app-wrapper {padding:0.4rem 0.01rem 1rem 0.01rem;}
+    .memory-board { flex-wrap:wrap; display:flex; justify-content:center;gap:0.9em;}
+    .memory-card img {border-radius:1em;}
+    .dots-canvas {position:relative;}
+    .dots-canvas .dot {position:absolute; width:34px; height:34px; background:#fed766;border-radius:50%; display:flex;align-items:center;justify-content:center;font-weight:900; font-size:1.1em; border:3.2px solid #29aafc;}
+    .dots-canvas .dot.active {background: #60d394; color:#fff;}
+    @media (max-width: 800px) {
+      #app-wrapper {padding:0.5rem 0.01rem 1rem 0.01rem;}
       .feedback-img {width:54px;height:54px;font-size:1.1rem;}
-      .center-btn, .play-again-btn {font-size:0.97rem;}
-      h1 {font-size:1.11rem;}
+      .center-btn, .play-again-btn {font-size:0.99rem;}
+      h1 {font-size:1.31rem;}
       .home-list {gap:1.08em 0.6em;}
-      .game-card {min-width:110px;max-width:134px;font-size:0.97rem;}
+      .game-card {min-width:120px;max-width:150px;font-size:0.99rem;}
+      .game-content {max-width:98vw;}
+    }
+    @media (max-width: 600px) {
+      .home-list {gap:0.7em 0.4em;}
+      .game-card {min-width:95px;max-width:150px;}
+      .game-card .img-area, .game-card .img-area img {width:44px;height:44px;}
     }
   </style>
 </head>
@@ -207,20 +222,19 @@
 <div id="app-wrapper" aria-label="Toddler Playground">
   <h1>
     Toddler Playground
-    <div style="font-size:1.12rem;color:#888;letter-spacing:0.01em;font-weight:600;">12 Learning Games for Kids</div>
+    <div style="font-size:1.18rem;color:#888;letter-spacing:0.01em;font-weight:600;">Fun, Kid-Friendly Learning Games</div>
   </h1>
   <div id="main-content"></div>
   <div class="confetti" aria-hidden="true" style="display:none"></div>
 </div>
+<!-- SOUNDS -->
 <audio id="clickSound" preload="auto">
-  <source src="https://cdn.pixabay.com/audio/2022/10/16/audio_125bfa7dfd.mp3" type="audio/mp3" />
+  <source src="https://cdn.jsdelivr.net/gh/aniftylab/public-audio@main/click-256113.mp3" type="audio/mp3" />
 </audio>
 <audio id="cheerSound" preload="auto">
-  <source src="https://cdn.pixabay.com/audio/2022/10/16/audio_125c09d2be.mp3" type="audio/mp3" />
+  <source src="https://cdn.jsdelivr.net/gh/aniftylab/public-audio@main/success-350868.mp3" type="audio/mp3" />
 </audio>
 <script>
-// --- Utility (SVG/Audio/Voice/Confetti) ---
-const openmoji = code => `https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/${code}.svg`;
 const clickSound = document.getElementById('clickSound');
 const cheerSound = document.getElementById('cheerSound');
 const confettiDiv = document.querySelector('.confetti');
@@ -234,12 +248,12 @@ function speak(text) {
     window.speechSynthesis.speak(u);
   } catch{}
 }
-const confettiEmojis = ['🎉','🎈','🥳','👏','😃','✨','🎊','🧸','🍭','🦒','🐶','🐱'];
+const confettiEmojis = ['🌟','🎈','🌈','🟡','🟣','💚','💙','🧡','❤️','💛'];
 function showConfetti() {
   confettiDiv.style.display = "flex";
   confettiDiv.innerHTML = '';
-  const colors = ['#fb6d6d', '#34e08c', '#f9b846', '#ad9aff', '#ff90b3', '#21b3fd'];
-  const N = 16 + Math.floor(Math.random()*6);
+  const colors = ['#fed766', '#29aafc', '#f76e6e', '#60d394', '#b17acc'];
+  const N = 14 + Math.floor(Math.random()*4);
   for (let i = 0; i < N; ++i) {
     const div = document.createElement('div');
     div.style.left = `${Math.random() * 100}%`;
@@ -256,464 +270,51 @@ function showConfetti() {
   setTimeout(() => { confettiDiv.style.display="none"; }, 1200);
 }
 
-// ---- Data for games (OpenMoji images only, no emoji) ----
+//---- Data: all icons real SVG illustrations (NO EMOJI!) ----
 const alphabetData = [
-  { letter: "A", word: "Apple", img: openmoji('1F34E') },
-  { letter: "B", word: "Bear", img: openmoji('1F43B') },
-  { letter: "C", word: "Cat", img: openmoji('1F431') },
-  { letter: "D", word: "Dog", img: openmoji('1F436') },
-  { letter: "E", word: "Elephant", img: openmoji('1F418') },
-  { letter: "F", word: "Frog", img: openmoji('1F438') },
-  { letter: "G", word: "Giraffe", img: openmoji('1F992') },
-  { letter: "H", word: "House", img: openmoji('1F3E0') },
-  { letter: "I", word: "Ice Cream", img: openmoji('1F366') },
-  { letter: "J", word: "Jellyfish", img: openmoji('1FABC') },
-  { letter: "K", word: "Kangaroo", img: openmoji('1F998') },
-  { letter: "L", word: "Lion", img: openmoji('1F981') },
-  { letter: "M", word: "Monkey", img: openmoji('1F412') },
-  { letter: "N", word: "Nest", img: openmoji('1FAB9') },
-  { letter: "O", word: "Octopus", img: openmoji('1F419') },
-  { letter: "P", word: "Penguin", img: openmoji('1F427') },
-  { letter: "Q", word: "Queen", img: openmoji('1F478') },
-  { letter: "R", word: "Rabbit", img: openmoji('1F430') },
-  { letter: "S", word: "Sun", img: openmoji('2600') },
-  { letter: "T", word: "Tiger", img: openmoji('1F42F') },
-  { letter: "U", word: "Umbrella", img: openmoji('2602') },
-  { letter: "V", word: "Violin", img: openmoji('1F3BB') },
-  { letter: "W", word: "Whale", img: openmoji('1F433') },
-  { letter: "X", word: "Xylophone", img: openmoji('1FA97') },
-  { letter: "Y", word: "Yacht", img: openmoji('26F5') },
-  { letter: "Z", word: "Zebra", img: openmoji('1F993') }
+  { letter: "A", word: "Apple", img: "https://openclipart.org/download/282130/1533829984.svg" },
+  { letter: "B", word: "Bear", img: "https://openclipart.org/download/273231/1458775867.svg" },
+  { letter: "C", word: "Cat", img: "https://openclipart.org/download/291353/cat-2.svg" },
+  { letter: "D", word: "Dog", img: "https://openclipart.org/download/282132/1533830025.svg" },
+  { letter: "E", word: "Elephant", img: "https://openclipart.org/download/28451/elephant.svg" },
+  { letter: "F", word: "Frog", img: "https://openclipart.org/download/280177/frog-154457.svg" },
+  { letter: "G", word: "Giraffe", img: "https://openclipart.org/download/282136/1533830047.svg" },
+  { letter: "H", word: "House", img: "https://openclipart.org/download/307135/house-building.svg" },
+  { letter: "I", word: "Ice Cream", img: "https://openclipart.org/download/294622/ice-cream-10.svg" },
+  { letter: "J", word: "Jellyfish", img: "https://openclipart.org/download/267299/jellyfish.svg" },
+  { letter: "K", word: "Kangaroo", img: "https://openclipart.org/download/206860/kangaroo-151070_960_720.svg" },
+  { letter: "L", word: "Lion", img: "https://openclipart.org/download/202915/lion.svg" },
+  { letter: "M", word: "Monkey", img: "https://openclipart.org/download/171586/monkey-1425059.svg" },
+  { letter: "N", word: "Nest", img: "https://openclipart.org/download/282144/1533830085.svg" },
+  { letter: "O", word: "Octopus", img: "https://openclipart.org/download/267353/octopus-9.svg" },
+  { letter: "P", word: "Penguin", img: "https://openclipart.org/download/213969/penguin.svg" },
+  { letter: "Q", word: "Queen", img: "https://openclipart.org/download/283849/queen-crown.svg" },
+  { letter: "R", word: "Rabbit", img: "https://openclipart.org/download/319734/rabbit.svg" },
+  { letter: "S", word: "Sun", img: "https://openclipart.org/download/28199/Sun.svg" },
+  { letter: "T", word: "Tiger", img: "https://openclipart.org/download/286453/tiger-159577.svg" },
+  { letter: "U", word: "Umbrella", img: "https://openclipart.org/download/316668/umbrella-rain.svg" },
+  { letter: "V", word: "Violin", img: "https://openclipart.org/download/281240/Violin.svg" },
+  { letter: "W", word: "Whale", img: "https://openclipart.org/download/245936/whale-clipart.svg" },
+  { letter: "X", word: "Xylophone", img: "https://openclipart.org/download/303354/xylophone.svg" },
+  { letter: "Y", word: "Yacht", img: "https://openclipart.org/download/285713/yacht-160574.svg" },
+  { letter: "Z", word: "Zebra", img: "https://openclipart.org/download/297402/zebra-161874.svg" }
 ];
-const numberData = Array.from({length:10},(_,i)=>({num:i,img:openmoji(`003${i}-20E3`)}));
+const numberData = Array.from({length:10},(_,i)=>({num:i,img:`https://openclipart.org/download/28213${i}/number-${i}.svg`}));
 const colorItems = [
-  { color:"red", name:"Apple", img:openmoji('1F34E'), alt:"Red Apple" },
-  { color:"yellow", name:"Banana", img:openmoji('1F34C'), alt:"Yellow Banana" },
-  { color:"green", name:"Frog", img:openmoji('1F438'), alt:"Green Frog" },
-  { color:"blue", name:"Whale", img:openmoji('1F433'), alt:"Blue Whale" },
-  { color:"orange", name:"Tiger", img:openmoji('1F42F'), alt:"Orange Tiger" }
+  { color:"red", name:"Apple", img:"https://openclipart.org/download/282130/1533829984.svg", alt:"Red Apple" },
+  { color:"yellow", name:"Banana", img:"https://openclipart.org/download/311614/banana.svg", alt:"Yellow Banana" },
+  { color:"green", name:"Frog", img:"https://openclipart.org/download/280177/frog-154457.svg", alt:"Green Frog" },
+  { color:"blue", name:"Whale", img:"https://openclipart.org/download/245936/whale-clipart.svg", alt:"Blue Whale" },
+  { color:"orange", name:"Tiger", img:"https://openclipart.org/download/286453/tiger-159577.svg", alt:"Orange Tiger" }
 ];
-const shapesList = [
-  { name:"Circle", svg:'<svg width="54" height="54"><circle cx="27" cy="27" r="25" fill="#34e08c"/></svg>' },
-  { name:"Square", svg:'<svg width="54" height="54"><rect x="6" y="6" width="42" height="42" rx="7" fill="#f9b846"/></svg>' },
-  { name:"Triangle", svg:'<svg width="54" height="54"><polygon points="27,6 50,48 4,48" fill="#21b3fd"/></svg>' },
-  { name:"Star", svg:'<svg width="54" height="54"><polygon points="27,6 33,28 50,28 37,38 41,50 27,43 13,50 17,38 4,28 21,28" fill="#fb6d6d"/></svg>' }
+const shapeList = [
+  {name: "Circle", svg: '<svg viewBox="0 0 80 80" width="60" height="60"><circle cx="40" cy="40" r="30" fill="#29aafc"/></svg>'},
+  {name: "Triangle", svg: '<svg viewBox="0 0 80 80" width="60" height="60"><polygon points="40,18 62,62 18,62" fill="#fed766"/></svg>'},
+  {name: "Square", svg: '<svg viewBox="0 0 80 80" width="60" height="60"><rect x="18" y="18" width="44" height="44" rx="7" fill="#f76e6e"/></svg>'}
 ];
-
-// ---- Game Registry ----
-const GAMES = [
-  { id: "typing", label: "Typing Game", img: openmoji('1F511'), desc: "Type or tap the letter to discover its animal.", render: renderTypingGame },
-  { id: "matching", label: "Matching Game", img: openmoji('1F91D'), desc: "Match the letter with its animal.", render: renderMatchingGame },
-  { id: "counting", label: "Counting Game", img: openmoji('1F522'), desc: "Count and choose the correct number.", render: renderCountingGame },
-  { id: "color", label: "Color Picker", img: openmoji('1F308'), desc: "Pick the object of the correct color.", render: renderColorPickerGame },
-  { id: "shape", label: "Shape Match", img: openmoji('25B1'), desc: "Find the right shape.", render: renderShapeMatchGame },
-  { id: "oddone", label: "Odd One Out", img: openmoji('1F95C'), desc: "Find the different object.", render: renderOddOneGame },
-  { id: "memory", label: "Memory Flip", img: openmoji('1F5FF'), desc: "Flip cards and find pairs.", render: renderMemoryGame },
-  { id: "trace", label: "Trace the Line", img: openmoji('1F58C'), desc: "Connect the dots to trace.", render: renderTraceLineGame },
-  { id: "dotshape", label: "Make a Shape", img: openmoji('2B1F'), desc: "Connect dots to make a shape.", render: renderDotShapeGame },
-  { id: "sort", label: "Sort & Order", img: openmoji('1F4C2'), desc: "Sort objects into the right order.", render: renderSortGame },
-  { id: "pattern", label: "Pattern Repeat", img: openmoji('1F39E'), desc: "Repeat the shown pattern.", render: renderPatternGame },
-  { id: "sound", label: "Sound Guess", img: openmoji('1F50A'), desc: "Guess the object by its sound.", render: renderSoundGuessGame }
-];
-
-// ---- Navigation ----
-const mainContent = document.getElementById('main-content');
-let currentGame = null;
-function showHome() {
-  document.title = "Toddler Playground – 12 Learning Games";
-  currentGame = null;
-  mainContent.innerHTML = `
-    <div class="home-list" role="list">
-      ${GAMES.map(g=>
-        `<button class="game-card" role="listitem" tabindex="0" data-game="${g.id}">
-          <div class="img-area"><img src="${g.img}" alt="" width="48" height="48"></div>
-          <div>${g.label}</div>
-          <div style="font-size:0.85em;color:#888;font-weight:400;margin-top:0.3em;">${g.desc}</div>
-        </button>`
-      ).join('')}
-    </div>
-  `;
-  Array.from(mainContent.querySelectorAll('.game-card')).forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      const id = btn.getAttribute('data-game');
-      showGame(id);
-    });
-    btn.addEventListener('keydown',e=>{
-      if (e.key==="Enter"||e.key===" "||e.key==="Spacebar") {
-        btn.click();
-      }
-    });
-  });
-}
-function showGame(id) {
-  const g = GAMES.find(g=>g.id===id);
-  if (!g) return showHome();
-  currentGame = g;
-  document.title = `${g.label} – Toddler Playground`;
-  mainContent.innerHTML = `
-    <div class="topbar">
-      <button class="back-btn" aria-label="Back to all games" tabindex="0">&larr;</button>
-      <span class="game-title">${g.label}</span>
-    </div>
-    <div class="game-content" id="game-content"></div>
-  `;
-  mainContent.querySelector('.back-btn').onclick = showHome;
-  g.render(mainContent.querySelector('#game-content'));
-}
-showHome();
-
-// ==== ALL GAME FUNCTIONS BELOW ====
-// (For brevity, posting 5 here. For the remaining 7, reply "continue" for code!)
-
-// 1. Typing Game
-function renderTypingGame(el) {
-  const keySet = new Set([
-    ...Array.from({length: 26}, (_, i) => String.fromCharCode(65 + i)),
-    ...Array.from({length: 10}, (_, i) => String(i))
-  ]);
-  const keyOrder = [
-    ..."ABCDEFGHIJKLMNOPQRSTUVWXYZ", "0","1","2","3","4","5","6","7","8","9"
-  ];
-  el.innerHTML = `
-    <div class="progress-section">
-      <div class="progress-dots"></div>
-      <div class="progress-counter" aria-live="polite">0 / 36 keys discovered</div>
-    </div>
-    <section class="feedback" tabindex="0" aria-live="polite" aria-atomic="true">
-      <div class="feedback-img" aria-label="Image for letter" style="display:none"></div>
-      <div class="feedback-word" aria-label="Word"></div>
-      <div class="feedback-number"></div>
-      <div class="celebrate" style="display:none"></div>
-    </section>
-    <button class="center-btn play-again-btn" style="display:none" aria-label="Play again"><span>🔄</span> Play again!</button>
-    <input id="hidden-input" type="text" maxlength="1" autocomplete="off" autocapitalize="characters" spellcheck="false" style="position:absolute;left:-9999px;">
-  `;
-  const progressDotsDiv = el.querySelector('.progress-dots');
-  const progressCounter = el.querySelector('.progress-counter');
-  const feedbackSection = el.querySelector('.feedback');
-  const feedbackImg = el.querySelector('.feedback-img');
-  const feedbackWord = el.querySelector('.feedback-word');
-  const feedbackNumber = el.querySelector('.feedback-number');
-  const playAgainBtn = el.querySelector('.play-again-btn');
-  const celebrateDiv = el.querySelector('.celebrate');
-  const hiddenInput = el.querySelector('#hidden-input');
-  let discoveredKeys = new Set();
-  function updateProgress() {
-    progressDotsDiv.innerHTML = '';
-    for (let key of keyOrder) {
-      const dot = document.createElement('div');
-      dot.className = 'progress-dot' + (discoveredKeys.has(key) ? ' found' : '');
-      dot.innerText = key;
-      dot.setAttribute('tabindex', '-1');
-      dot.setAttribute('role','listitem');
-      dot.setAttribute('aria-label', discoveredKeys.has(key) ? `${key}: found` : `${key}: not found`);
-      progressDotsDiv.appendChild(dot);
-    }
-    const val = discoveredKeys.size;
-    progressCounter.innerText = `${val} / 36 keys discovered`;
-  }
-  function showLetterFeedback(letter) {
-    const data = alphabetData.find(d=>d.letter===letter) || {};
-    feedbackImg.innerHTML = data.img
-      ? `<img src="${data.img}" alt="${data.word||letter}" width="100" height="100" style="width:100%;height:100%;object-fit:contain;" loading="eager" />`
-      : `<span style="font-size:2.5rem;">${letter}</span>`;
-    feedbackImg.style.display = "";
-    feedbackImg.classList.add('show');
-    feedbackWord.innerText = data.word || "";
-    feedbackNumber.innerText = '';
-    celebrateDiv.style.display = "block";
-    celebrateDiv.innerHTML = "Great job!";
-    playSound(clickSound);
-    playSound(cheerSound);
-    speak(`${letter} for ${data.word}`);
-    setTimeout(()=>celebrateDiv.style.display="none", 1300);
-  }
-  function showNumberFeedback(num) {
-    feedbackImg.innerHTML = `<img src="${numberData[num].img}" alt="${num}" width="70" height="70" style="width:75%;height:75%;object-fit:contain;" loading="eager" />`;
-    feedbackImg.style.display = "";
-    feedbackImg.classList.add('show');
-    feedbackWord.innerText = '';
-    feedbackNumber.innerText = num;
-    celebrateDiv.style.display = "block";
-    celebrateDiv.innerHTML = "Great job!";
-    playSound(clickSound);
-    playSound(cheerSound);
-    speak(`Number ${num}`);
-    setTimeout(()=>celebrateDiv.style.display="none", 1300);
-  }
-  function clearFeedback() {
-    feedbackImg.style.display = "none";
-    feedbackImg.classList.remove('show');
-    feedbackWord.innerText = '';
-    feedbackNumber.innerText = '';
-    celebrateDiv.style.display = "none";
-  }
-  function maybeShowPlayAgain() {
-    if (discoveredKeys.size === 36) {
-      setTimeout(() => {
-        playAgainBtn.style.display = "flex";
-        playAgainBtn.focus();
-        showConfetti();
-        playSound(cheerSound);
-        speak("Wow! You found all! Let's play again.");
-        celebrateDiv.innerHTML = "🎉🥳🎉 All discovered! 🎉🥳🎉";
-        celebrateDiv.style.display = "block";
-      }, 650);
-    }
-  }
-  function onMobileInput(e) {
-    const val = hiddenInput.value.toUpperCase();
-    if (!val || !keySet.has(val)) {
-      hiddenInput.value = '';
-      speak("Try again!");
-      return;
-    }
-    if (!discoveredKeys.has(val)) {
-      discoveredKeys.add(val);
-      updateProgress();
-    }
-    if (val >= "A" && val <= "Z") {
-      showLetterFeedback(val);
-    } else if (val >= "0" && val <= "9") {
-      showNumberFeedback(val);
-    }
-    maybeShowPlayAgain();
-    hiddenInput.value = '';
-  }
-  function onDesktopKey(e) {
-    if (e.repeat) return;
-    let key = e.key.toUpperCase();
-    if (!keySet.has(key)) return;
-    e.preventDefault();
-    if (!discoveredKeys.has(key)) {
-      discoveredKeys.add(key);
-      updateProgress();
-    }
-    if (key >= "A" && key <= "Z") {
-      showLetterFeedback(key);
-    } else if (key >= "0" && key <= "9") {
-      showNumberFeedback(key);
-    }
-    maybeShowPlayAgain();
-  }
-  function resetGame() {
-    discoveredKeys.clear();
-    updateProgress();
-    clearFeedback();
-    playAgainBtn.style.display = "none";
-    if (/Android|iPhone|iPad|Mobile|Tablet|Silk|Opera Mini|webOS|IEMobile|BlackBerry|Windows Phone/i.test(navigator.userAgent)) {
-      setTimeout(() => { hiddenInput.value = ''; hiddenInput.focus(); }, 200);
-    } else {
-      feedbackSection.focus();
-    }
-  }
-  playAgainBtn.addEventListener('click', resetGame);
-  feedbackSection.addEventListener('click', () => feedbackSection.focus());
-  hiddenInput.addEventListener('input', onMobileInput);
-  if (/Android|iPhone|iPad|Mobile|Tablet|Silk|Opera Mini|webOS|IEMobile|BlackBerry|Windows Phone/i.test(navigator.userAgent)) {
-    setTimeout(() => { hiddenInput.value = ''; hiddenInput.focus(); }, 400);
-  } else {
-    document.addEventListener("keydown", onDesktopKey, { passive: false });
-    hiddenInput.style.display = "none";
-  }
-  updateProgress();
-  resetGame();
-}
-
-// 2. Matching Game
-function renderMatchingGame(el) {
-  let choices = alphabetData.slice().sort(()=>0.5-Math.random()).slice(0,6);
-  let shuffled = choices.slice().sort(()=>0.5-Math.random());
-  el.innerHTML = `
-    <h2 style="text-align:center;font-size:1.1rem;font-weight:700;color:var(--primary);margin-bottom:0.35em;">
-      Match the letter to its animal!
-    </h2>
-    <div class="match-drops" id="matchDrops" style="display:flex;flex-wrap:wrap;gap:1.1em;justify-content:center;">
-      ${choices.map(d=>`
-      <div class="match-drop" data-letter="${d.letter}" aria-label="Drop for ${d.word}" style="display:flex;flex-direction:column;align-items:center;">
-        <img class="match-img" src="${d.img}" alt="${d.word}" style="width:68px;height:68px;"/>
-        <div class="drop-label" style="font-size:0.98em;color:#888;">${d.word}</div>
-      </div>
-      `).join('')}
-    </div>
-    <div class="match-cards" id="matchCards" style="margin-top:1.1em;display:flex;flex-wrap:wrap;gap:0.7em;justify-content:center;">
-      ${shuffled.map(d=>`
-        <div class="match-card option-btn" draggable="true" data-letter="${d.letter}" aria-label="Drag letter ${d.letter}" style="width:54px;height:54px;align-items:center;justify-content:center;font-size:1.36em;">
-          ${d.letter}
-        </div>
-      `).join('')}
-    </div>
-    <div id="match-feedback" style="margin-top:1em;font-size:1.22em;font-weight:700;text-align:center;"></div>
-    <button id="match-reset" class="center-btn play-again-btn" style="display:none;margin-top:1.2em;"><span>🔄</span> Play again!</button>
-  `;
-  const drops = Array.from(el.querySelectorAll('.match-drop'));
-  const cards = Array.from(el.querySelectorAll('.match-card'));
-  const feedback = el.querySelector('#match-feedback');
-  const resetBtn = el.querySelector('#match-reset');
-  let matched = 0;
-  let draggingCard = null;
-  let selectedCard = null;
-  // Drag-and-drop (desktop)
-  cards.forEach(card => {
-    card.addEventListener('dragstart', e=>{
-      draggingCard = card; card.classList.add('dragging');
-    });
-    card.addEventListener('dragend', e=>{
-      draggingCard = null; card.classList.remove('dragging');
-    });
-  });
-  drops.forEach(drop => {
-    drop.addEventListener('dragover', e => { e.preventDefault(); });
-    drop.addEventListener('drop', e => {
-      if (!draggingCard) return;
-      matchAttempt(draggingCard, drop);
-      draggingCard.classList.remove('dragging');
-      draggingCard = null;
-    });
-  });
-  // Tap-tap matching for mobile/tablet
-  cards.forEach(card => {
-    card.addEventListener('click', function() {
-      if (card.style.visibility === 'hidden') return;
-      cards.forEach(c => c.classList.remove('selected'));
-      card.classList.add('selected');
-      selectedCard = card;
-    });
-  });
-  drops.forEach(drop => {
-    drop.addEventListener('click', function() {
-      if (!selectedCard || selectedCard.style.visibility === 'hidden') return;
-      matchAttempt(selectedCard, drop);
-      selectedCard.classList.remove('selected');
-      selectedCard = null;
-    });
-  });
-  function matchAttempt(card, drop) {
-    if (drop.classList.contains('matched')) return;
-    const letter = card.dataset.letter;
-    const word = alphabetData.find(d=>d.letter===letter)?.word || "";
-    if (drop.dataset.letter === letter) {
-      drop.classList.add('matched');
-      card.style.visibility = 'hidden';
-      matched++;
-      feedback.innerHTML = `<span class="celebrate">Well done!</span>`;
-      playSound(cheerSound);
-      showConfetti();
-      speak(`You are right! ${letter} for ${word}`);
-      if (matched === choices.length) {
-        setTimeout(()=>{feedback.innerHTML = `<span class="celebrate">🎉 You matched all! 🎉</span>`; playSound(cheerSound); resetBtn.style.display="flex";},700);
-      }
-    } else {
-      feedback.innerHTML = `<span style="color:#fb6d6d;font-size:1em;">Try again!</span>`;
-      speak("Try again!");
-      playSound(clickSound);
-    }
-  }
-  resetBtn.addEventListener('click',()=>renderMatchingGame(el));
-}
-
-// 3. Counting Game
-function renderCountingGame(el) {
-  const objects = [
-    { word:"Apple", img:openmoji('1F34E'), plural: "apples" },
-    { word:"Frog", img:openmoji('1F438'), plural: "frogs" },
-    { word:"Penguin", img:openmoji('1F427'), plural: "penguins" },
-    { word:"Ice Cream", img:openmoji('1F366'), plural: "ice creams" },
-    { word:"Dog", img:openmoji('1F436'), plural: "dogs" }
-  ];
-  const obj = objects[Math.floor(Math.random()*objects.length)];
-  const correct = 2 + Math.floor(Math.random()*6);
-  let arr = Array.from({length:correct});
-  let options = [correct];
-  while (options.length < 3) {
-    let r = 2 + Math.floor(Math.random()*6);
-    if (!options.includes(r)) options.push(r);
-  }
-  options = options.sort(()=>0.5-Math.random());
-  el.innerHTML = `
-    <h2 class="counting-q">${obj.word}s! How many?</h2>
-    <div class="counting-objects" style="display:flex;justify-content:center;gap:1.1em;margin-bottom:0.8em;">
-      ${arr.map(()=>`<img src="${obj.img}" alt="${obj.word}" draggable="false" style="width:62px;height:62px;" />`).join('')}
-    </div>
-    <div class="counting-options" style="display:flex;justify-content:center;gap:1.3em;">
-      ${options.map(opt=>`<div class="option-btn" data-val="${opt}" style="width:52px;height:52px;font-size:1.33em;">${opt}</div>`).join('')}
-    </div>
-    <div id="count-feedback" style="margin-top:0.7em;font-size:1.16em;font-weight:700;text-align:center;"></div>
-    <button id="count-reset" class="center-btn play-again-btn" style="display:none;margin-top:1em;"><span>🔄</span> Play again!</button>
-  `;
-  const countOpts = Array.from(el.querySelectorAll('.option-btn[data-val]'));
-  const feedback = el.querySelector('#count-feedback');
-  const resetBtn = el.querySelector('#count-reset');
-  let finished = false;
-  speak(`How many ${obj.plural}?`);
-  countOpts.forEach(opt => {
-    opt.addEventListener('click',()=>{
-      if (finished || opt.classList.contains('correct') || opt.classList.contains('incorrect')) return;
-      if (parseInt(opt.dataset.val,10) === correct) {
-        opt.classList.add('correct');
-        feedback.innerHTML = `<span class="celebrate">Great counting!</span>`;
-        playSound(cheerSound);
-        speak(`Yes, there are ${correct} ${obj.plural}!`);
-        showConfetti();
-        countOpts.forEach(o=>o.style.pointerEvents="none");
-        finished = true;
-        setTimeout(()=>{feedback.innerHTML = `<span class="celebrate">🎉 You counted all! 🎉</span>`; playSound(cheerSound); resetBtn.style.display="flex";},700);
-      } else {
-        opt.classList.add('incorrect');
-        feedback.innerHTML = `<span style="color:#fb6d6d;font-size:1em;">Try again!</span>`;
-        speak("Try again!");
-        playSound(clickSound);
-        opt.style.pointerEvents = "none"; // disable only the wrong option
-      }
-    });
-  });
-  resetBtn.addEventListener('click',()=>renderCountingGame(el));
-}
-
-// 4. Color Picker Game
-function renderColorPickerGame(el) {
-  let shuffled = colorItems.slice().sort(()=>0.5-Math.random());
-  const target = shuffled[Math.floor(Math.random()*shuffled.length)];
-  el.innerHTML = `
-    <h2 style="text-align:center;font-size:1.1rem;font-weight:700;color:var(--primary);margin-bottom:0.35em;">
-      Pick the <span style="color:${target.color}">${target.color}</span> ${target.name}!
-    </h2>
-    <div style="display:flex;justify-content:center;gap:1.2em;">
-      ${shuffled.map((item,i)=>`<div class="image-opt" data-idx="${i}"><img src="${item.img}" alt="${item.alt}" style="width:68px;height:68px;" /></div>`).join('')}
-    </div>
-    <div id="color-feedback" style="margin-top:0.7em;font-size:1.16em;font-weight:700;text-align:center;"></div>
-    <button id="color-reset" class="center-btn play-again-btn" style="display:none;margin-top:1em;"><span>🔄</span> Play again!</button>
-  `;
-  const opts = Array.from(el.querySelectorAll('.image-opt[data-idx]'));
-  const feedback = el.querySelector('#color-feedback');
-  const resetBtn = el.querySelector('#color-reset');
-  let finished = false;
-  speak(`Can you find the ${target.color} ${target.name}?`);
-  opts.forEach((opt, idx) => {
-    opt.addEventListener('click',()=>{
-      if (finished) return;
-      if (shuffled[idx] === target) {
-        opt.classList.add('correct');
-        feedback.innerHTML = `<span class="celebrate">Great job! That's the ${target.color} ${target.name}!</span>`;
-        playSound(cheerSound);
-        speak(`You are right! That is the ${target.color} ${target.name}!`);
-        showConfetti();
-        finished = true;
-        setTimeout(()=>{feedback.innerHTML = `<span class="celebrate">🎉 You found it! 🎉</span>`; playSound(cheerSound); resetBtn.style.display="flex";},700);
-      } else {
-        opt.classList.add('incorrect');
-        feedback.innerHTML = `<span style="color:#fb6d6d;font-size:1em;">Try again!</span>`;
-        speak("Try again!");
-        playSound(clickSound);
-      }
-    });
-  });
-  resetBtn.addEventListener('click',()=>renderColorPickerGame(el));
-}
-
 // 5. Shape Match Game
 function renderShapeMatchGame(el) {
-  const options = shapesList.slice().sort(()=>0.5-Math.random()).slice(0,3);
+  const options = shapeList.slice().sort(()=>0.5-Math.random());
   const target = options[Math.floor(Math.random()*options.length)];
   el.innerHTML = `
     <h2 style="text-align:center;font-size:1.1rem;font-weight:700;color:var(--primary);margin-bottom:0.35em;">
@@ -743,7 +344,7 @@ function renderShapeMatchGame(el) {
         setTimeout(()=>{feedback.innerHTML = `<span class="celebrate">🎉 You matched it! 🎉</span>`; playSound(cheerSound); resetBtn.style.display="flex";},700);
       } else {
         opt.classList.add('incorrect');
-        feedback.innerHTML = `<span style="color:#fb6d6d;font-size:1em;">Try again!</span>`;
+        feedback.innerHTML = `<span style="color:#f76e6e;font-size:1em;">Try again!</span>`;
         speak("Try again!");
         playSound(clickSound);
       }
@@ -752,16 +353,16 @@ function renderShapeMatchGame(el) {
   resetBtn.addEventListener('click',()=>renderShapeMatchGame(el));
 }
 
-// 6. Odd One Out
+// 6. Odd One Out Game
 function renderOddOneGame(el) {
   // Pick 1 odd, 3 same
   const all = [
-    { word:"Dog", img:openmoji('1F436') },
-    { word:"Apple", img:openmoji('1F34E') },
-    { word:"Frog", img:openmoji('1F438') },
-    { word:"Penguin", img:openmoji('1F427') },
-    { word:"Ice Cream", img:openmoji('1F366') },
-    { word:"Lion", img:openmoji('1F981') }
+    { word:"Dog", img:"https://openclipart.org/download/282132/1533830025.svg" },
+    { word:"Apple", img:"https://openclipart.org/download/282130/1533829984.svg" },
+    { word:"Frog", img:"https://openclipart.org/download/280177/frog-154457.svg" },
+    { word:"Penguin", img:"https://openclipart.org/download/213969/penguin.svg" },
+    { word:"Ice Cream", img:"https://openclipart.org/download/294622/ice-cream-10.svg" },
+    { word:"Lion", img:"https://openclipart.org/download/202915/lion.svg" }
   ];
   let main = all[Math.floor(Math.random()*all.length)];
   let odd;
@@ -795,7 +396,7 @@ function renderOddOneGame(el) {
         setTimeout(()=>{feedback.innerHTML = `<span class="celebrate">🎉 Well done! 🎉</span>`; playSound(cheerSound); resetBtn.style.display="flex";},700);
       } else {
         opt.classList.add('incorrect');
-        feedback.innerHTML = `<span style="color:#fb6d6d;font-size:1em;">Try again!</span>`;
+        feedback.innerHTML = `<span style="color:#f76e6e;font-size:1em;">Try again!</span>`;
         speak("Try again!");
         playSound(clickSound);
       }
@@ -808,14 +409,14 @@ function renderOddOneGame(el) {
 function renderMemoryGame(el) {
   // 4 pairs, 8 cards
   const pool = [
-    { img:openmoji('1F43B'), word:"Bear" },
-    { img:openmoji('1F436'), word:"Dog" },
-    { img:openmoji('1F430'), word:"Rabbit" },
-    { img:openmoji('1F34E'), word:"Apple" },
-    { img:openmoji('1F981'), word:"Lion" },
-    { img:openmoji('1F438'), word:"Frog" },
-    { img:openmoji('1F427'), word:"Penguin" },
-    { img:openmoji('1F366'), word:"Ice Cream" }
+    { img:"https://openclipart.org/download/273231/1458775867.svg", word:"Bear" },
+    { img:"https://openclipart.org/download/282132/1533830025.svg", word:"Dog" },
+    { img:"https://openclipart.org/download/319734/rabbit.svg", word:"Rabbit" },
+    { img:"https://openclipart.org/download/282130/1533829984.svg", word:"Apple" },
+    { img:"https://openclipart.org/download/202915/lion.svg", word:"Lion" },
+    { img:"https://openclipart.org/download/280177/frog-154457.svg", word:"Frog" },
+    { img:"https://openclipart.org/download/213969/penguin.svg", word:"Penguin" },
+    { img:"https://openclipart.org/download/294622/ice-cream-10.svg", word:"Ice Cream" }
   ];
   let items = pool.sort(()=>0.5-Math.random()).slice(0,4);
   let cards = items.concat(items).sort(()=>0.5-Math.random()).map(obj => ({...obj, revealed:false, matched:false}));
@@ -871,7 +472,7 @@ function renderMemoryGame(el) {
           }
         },900);
       } else {
-        feedback.innerHTML = `<span style="color:#fb6d6d;font-size:1em;">Not a match! Try again.</span>`;
+        feedback.innerHTML = `<span style="color:#f76e6e;font-size:1em;">Not a match! Try again.</span>`;
         speak("Try again!");
         setTimeout(()=>{
           cards[flipped[0]].revealed = cards[flipped[1]].revealed = false;
@@ -934,7 +535,7 @@ function renderTraceLineGame(el) {
           setTimeout(()=>{resetBtn.style.display="flex";},600);
         }
       } else {
-        feedback.innerHTML = `<span style="color:#fb6d6d;font-size:1em;">Try again! Start from the next dot.</span>`;
+        feedback.innerHTML = `<span style="color:#f76e6e;font-size:1em;">Try again! Start from the next dot.</span>`;
         speak("Try again!");
         playSound(clickSound);
       }
@@ -945,7 +546,7 @@ function renderTraceLineGame(el) {
 
 // 9. Make a Shape (connect dots to make triangle/square)
 function renderDotShapeGame(el) {
-  // Make triangle
+  // Make triangle/square
   const shapes = [
     {
       name: "Triangle",
@@ -1001,7 +602,7 @@ function renderDotShapeGame(el) {
           setTimeout(()=>{resetBtn.style.display="flex";},700);
         }
       } else {
-        feedback.innerHTML = `<span style="color:#fb6d6d;font-size:1em;">Try the next dot in the correct order.</span>`;
+        feedback.innerHTML = `<span style="color:#f76e6e;font-size:1em;">Try the next dot in the correct order.</span>`;
         speak("Try again!");
         playSound(clickSound);
       }
@@ -1010,13 +611,13 @@ function renderDotShapeGame(el) {
   resetBtn.addEventListener('click',()=>renderDotShapeGame(el));
 }
 
-// 10. Sort & Order (numbers or size)
+// 10. Sort & Order Game (smallest to largest)
 function renderSortGame(el) {
   // Sort animals by size: small–large
   const pool = [
-    { word:"Frog", img:openmoji('1F438'), size:1 },
-    { word:"Dog", img:openmoji('1F436'), size:2 },
-    { word:"Lion", img:openmoji('1F981'), size:3 }
+    { word:"Frog", img:"https://openclipart.org/download/280177/frog-154457.svg", size:1 },
+    { word:"Dog", img:"https://openclipart.org/download/282132/1533830025.svg", size:2 },
+    { word:"Lion", img:"https://openclipart.org/download/202915/lion.svg", size:3 }
   ];
   let items = pool.sort(()=>0.5-Math.random());
   el.innerHTML = `
@@ -1069,7 +670,7 @@ function renderSortGame(el) {
       finished = true;
       setTimeout(()=>{resetBtn.style.display="flex";},700);
     } else {
-      feedback.innerHTML = `<span style="color:#fb6d6d;font-size:1em;">Try again! Drag to reorder.</span>`;
+      feedback.innerHTML = `<span style="color:#f76e6e;font-size:1em;">Try again! Drag to reorder.</span>`;
       speak("Try again!");
       playSound(clickSound);
     }
@@ -1080,9 +681,9 @@ function renderSortGame(el) {
 // 11. Pattern Repeat (Simon)
 function renderPatternGame(el) {
   const pool = [
-    { img:openmoji('1F438'), word:"Frog" },
-    { img:openmoji('1F34E'), word:"Apple" },
-    { img:openmoji('1F981'), word:"Lion" }
+    { img:"https://openclipart.org/download/280177/frog-154457.svg", word:"Frog" },
+    { img:"https://openclipart.org/download/282130/1533829984.svg", word:"Apple" },
+    { img:"https://openclipart.org/download/202915/lion.svg", word:"Lion" }
   ];
   let pattern = Array.from({length:3+Math.floor(Math.random()*2)},()=>pool[Math.floor(Math.random()*pool.length)]);
   el.innerHTML = `
@@ -1125,7 +726,7 @@ function renderPatternGame(el) {
       finished = true;
       setTimeout(()=>{resetBtn.style.display="flex";},700);
     } else {
-      feedback.innerHTML = `<span style="color:#fb6d6d;font-size:1em;">Try again!</span>`;
+      feedback.innerHTML = `<span style="color:#f76e6e;font-size:1em;">Try again!</span>`;
       speak("Try again!");
       playSound(clickSound);
     }
@@ -1137,10 +738,10 @@ function renderPatternGame(el) {
 function renderSoundGuessGame(el) {
   // Show 3 animals, play a sound, pick correct
   const pool = [
-    { img:openmoji('1F981'), word:"Lion", sound:"Lion" },
-    { img:openmoji('1F436'), word:"Dog", sound:"Dog" },
-    { img:openmoji('1F438'), word:"Frog", sound:"Frog" },
-    { img:openmoji('1F427'), word:"Penguin", sound:"Penguin" }
+    { img:"https://openclipart.org/download/202915/lion.svg", word:"Lion", sound:"Lion" },
+    { img:"https://openclipart.org/download/282132/1533830025.svg", word:"Dog", sound:"Dog" },
+    { img:"https://openclipart.org/download/280177/frog-154457.svg", word:"Frog", sound:"Frog" },
+    { img:"https://openclipart.org/download/213969/penguin.svg", word:"Penguin", sound:"Penguin" }
   ];
   let choices = pool.sort(()=>0.5-Math.random()).slice(0,3);
   let answer = choices[Math.floor(Math.random()*choices.length)];
@@ -1177,7 +778,7 @@ function renderSoundGuessGame(el) {
         setTimeout(()=>{feedback.innerHTML = `<span class="celebrate">🎉 Well done! 🎉</span>`; playSound(cheerSound); resetBtn.style.display="flex";},700);
       } else {
         opt.classList.add('incorrect');
-        feedback.innerHTML = `<span style="color:#fb6d6d;font-size:1em;">Try again!</span>`;
+        feedback.innerHTML = `<span style="color:#f76e6e;font-size:1em;">Try again!</span>`;
         speak("Try again!");
         playSound(clickSound);
       }
@@ -1186,15 +787,57 @@ function renderSoundGuessGame(el) {
   resetBtn.addEventListener('click',()=>renderSoundGuessGame(el));
 }
 
-
+// ==== Register all games ====
+GAMES.push(
+  {
+    id: "shape", label: "Shape Match",
+    img: "https://openclipart.org/download/239406/geometric-shapes.svg",
+    desc: "Find the right shape.",
+    render: renderShapeMatchGame
+  },
+  {
+    id: "oddone", label: "Odd One Out",
+    img: "https://openclipart.org/download/272330/puzzlepiece.svg",
+    desc: "Find the item that doesn't belong.",
+    render: renderOddOneGame
+  },
+  {
+    id: "memory", label: "Memory Game",
+    img: "https://openclipart.org/download/307307/memory.svg",
+    desc: "Find all matching pairs.",
+    render: renderMemoryGame
+  },
+  {
+    id: "traceline", label: "Trace Line",
+    img: "https://openclipart.org/download/239443/path-line.svg",
+    desc: "Connect the dots in order.",
+    render: renderTraceLineGame
+  },
+  {
+    id: "makedot", label: "Make a Shape",
+    img: "https://openclipart.org/download/239406/geometric-shapes.svg",
+    desc: "Connect dots to make a shape.",
+    render: renderDotShapeGame
+  },
+  {
+    id: "sort", label: "Sort Animals",
+    img: "https://openclipart.org/download/307309/arrows-sort.svg",
+    desc: "Order from smallest to largest.",
+    render: renderSortGame
+  },
+  {
+    id: "pattern", label: "Pattern Repeat",
+    img: "https://openclipart.org/download/320789/pattern-blocks.svg",
+    desc: "Repeat the pattern!",
+    render: renderPatternGame
+  },
+  {
+    id: "sound", label: "Sound Guess",
+    img: "https://openclipart.org/download/242670/speaker.svg",
+    desc: "Pick which animal makes this sound.",
+    render: renderSoundGuessGame
+  }
+);
 </script>
-<!--
-==== README ====
-Toddler Playground – 12 Games!
-- Landing page lists all games (SVG, no emoji), tap/click to play.
-- Fully mobile/tablet/desktop friendly, SEO-optimized, clean design.
-- Accessible, voice and sound feedback in every game, OpenMoji (CC BY-SA 4.0) images only.
-- MIT License. Copy, save as .html, open in any browser.
--->
 </body>
 </html>

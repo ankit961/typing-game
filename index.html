@@ -752,7 +752,440 @@ function renderShapeMatchGame(el) {
   resetBtn.addEventListener('click',()=>renderShapeMatchGame(el));
 }
 
-// ==== 6–12: continue for full code ====
+// 6. Odd One Out
+function renderOddOneGame(el) {
+  // Pick 1 odd, 3 same
+  const all = [
+    { word:"Dog", img:openmoji('1F436') },
+    { word:"Apple", img:openmoji('1F34E') },
+    { word:"Frog", img:openmoji('1F438') },
+    { word:"Penguin", img:openmoji('1F427') },
+    { word:"Ice Cream", img:openmoji('1F366') },
+    { word:"Lion", img:openmoji('1F981') }
+  ];
+  let main = all[Math.floor(Math.random()*all.length)];
+  let odd;
+  do { odd = all[Math.floor(Math.random()*all.length)]; } while (odd.word === main.word);
+  let objs = [main, main, main, odd].sort(()=>0.5-Math.random());
+  el.innerHTML = `
+    <h2 style="text-align:center;font-size:1.1rem;font-weight:700;color:var(--primary);margin-bottom:0.35em;">
+      Find the odd one out!
+    </h2>
+    <div style="display:flex;justify-content:center;gap:1.3em;">
+      ${objs.map((item,i)=>`<div class="image-opt" data-idx="${i}"><img src="${item.img}" alt="${item.word}" style="width:68px;height:68px;" /></div>`).join('')}
+    </div>
+    <div id="odd-feedback" style="margin-top:0.8em;font-size:1.15em;font-weight:700;text-align:center;"></div>
+    <button id="odd-reset" class="center-btn play-again-btn" style="display:none;margin-top:1em;">🔄 Play again!</button>
+  `;
+  const opts = Array.from(el.querySelectorAll('.image-opt[data-idx]'));
+  const feedback = el.querySelector('#odd-feedback');
+  const resetBtn = el.querySelector('#odd-reset');
+  let finished = false;
+  speak(`Which one is different?`);
+  opts.forEach((opt, idx) => {
+    opt.addEventListener('click',()=>{
+      if (finished) return;
+      if (objs[idx] === odd) {
+        opt.classList.add('correct');
+        feedback.innerHTML = `<span class="celebrate">That's correct! ${odd.word} is different.</span>`;
+        playSound(cheerSound);
+        speak(`Yes! The ${odd.word} is different!`);
+        showConfetti();
+        finished = true;
+        setTimeout(()=>{feedback.innerHTML = `<span class="celebrate">🎉 Well done! 🎉</span>`; playSound(cheerSound); resetBtn.style.display="flex";},700);
+      } else {
+        opt.classList.add('incorrect');
+        feedback.innerHTML = `<span style="color:#fb6d6d;font-size:1em;">Try again!</span>`;
+        speak("Try again!");
+        playSound(clickSound);
+      }
+    });
+  });
+  resetBtn.addEventListener('click',()=>renderOddOneGame(el));
+}
+
+// 7. Memory Flip Game
+function renderMemoryGame(el) {
+  // 4 pairs, 8 cards
+  const pool = [
+    { img:openmoji('1F43B'), word:"Bear" },
+    { img:openmoji('1F436'), word:"Dog" },
+    { img:openmoji('1F430'), word:"Rabbit" },
+    { img:openmoji('1F34E'), word:"Apple" },
+    { img:openmoji('1F981'), word:"Lion" },
+    { img:openmoji('1F438'), word:"Frog" },
+    { img:openmoji('1F427'), word:"Penguin" },
+    { img:openmoji('1F366'), word:"Ice Cream" }
+  ];
+  let items = pool.sort(()=>0.5-Math.random()).slice(0,4);
+  let cards = items.concat(items).sort(()=>0.5-Math.random()).map(obj => ({...obj, revealed:false, matched:false}));
+  el.innerHTML = `
+    <h2 style="text-align:center;font-size:1.1rem;font-weight:700;color:var(--primary);margin-bottom:0.3em;">
+      Flip cards to find matching pairs!
+    </h2>
+    <div class="memory-board" style="display:flex;flex-wrap:wrap;gap:0.7em;justify-content:center;"></div>
+    <div id="memory-feedback" style="margin-top:0.7em;font-size:1.11em;font-weight:700;text-align:center;"></div>
+    <button id="memory-reset" class="center-btn play-again-btn" style="display:none;margin-top:1em;">🔄 Play again!</button>
+  `;
+  const board = el.querySelector('.memory-board');
+  const feedback = el.querySelector('#memory-feedback');
+  const resetBtn = el.querySelector('#memory-reset');
+  let flipped = [], matched = 0, lock = false;
+  function update() {
+    board.innerHTML = '';
+    cards.forEach((card, idx) => {
+      let btn = document.createElement('div');
+      btn.className = 'memory-card option-btn' + (card.revealed || card.matched ? ' revealed' : '');
+      btn.setAttribute('tabindex','0');
+      btn.innerHTML = (card.revealed || card.matched)
+        ? `<img src="${card.img}" alt="${card.word}" style="width:48px;height:48px;" />`
+        : '';
+      btn.addEventListener('click', () => flipCard(idx));
+      btn.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ') flipCard(idx)});
+      board.appendChild(btn);
+    });
+  }
+  function flipCard(idx) {
+    if (lock || cards[idx].revealed || cards[idx].matched) return;
+    cards[idx].revealed = true;
+    flipped.push(idx);
+    update();
+    playSound(clickSound);
+    if (flipped.length === 2) {
+      lock = true;
+      let a = cards[flipped[0]], b = cards[flipped[1]];
+      if (a.word === b.word) {
+        cards[flipped[0]].matched = cards[flipped[1]].matched = true;
+        matched++;
+        feedback.innerHTML = `<span class="celebrate">Pair found: ${a.word}!</span>`;
+        speak(`You found a pair of ${a.word}s!`);
+        playSound(cheerSound);
+        showConfetti();
+        setTimeout(()=>{
+          flipped = [];
+          lock = false;
+          update();
+          if (matched === 4) {
+            feedback.innerHTML = `<span class="celebrate">🎉 All pairs found! 🎉</span>`;
+            playSound(cheerSound); resetBtn.style.display="flex";
+          }
+        },900);
+      } else {
+        feedback.innerHTML = `<span style="color:#fb6d6d;font-size:1em;">Not a match! Try again.</span>`;
+        speak("Try again!");
+        setTimeout(()=>{
+          cards[flipped[0]].revealed = cards[flipped[1]].revealed = false;
+          flipped = [];
+          lock = false;
+          update();
+        }, 1000);
+      }
+    }
+  }
+  resetBtn.addEventListener('click',()=>renderMemoryGame(el));
+  update();
+}
+
+// 8. Trace the Line (connect-the-dots in order)
+function renderTraceLineGame(el) {
+  // Simple zigzag
+  const points = [
+    {x:50,y:30}, {x:120,y:90}, {x:200,y:30}, {x:280,y:100}
+  ];
+  el.innerHTML = `
+    <h2 style="text-align:center;font-size:1.1rem;font-weight:700;color:var(--primary);margin-bottom:0.3em;">
+      Tap the dots in order to trace the line!
+    </h2>
+    <div class="dots-canvas" style="width:320px;height:140px;position:relative;margin:0 auto;">
+      <svg class="line-svg" width="320" height="140"></svg>
+      ${points.map((pt,i)=>`<div class="dot dot-btn" data-idx="${i}" style="left:${pt.x}px;top:${pt.y}px;">${i+1}</div>`).join('')}
+    </div>
+    <div id="trace-feedback" style="margin-top:0.8em;font-size:1.13em;font-weight:700;text-align:center;"></div>
+    <button id="trace-reset" class="center-btn play-again-btn" style="display:none;margin-top:1em;">🔄 Play again!</button>
+  `;
+  const dots = Array.from(el.querySelectorAll('.dot-btn'));
+  const svg = el.querySelector('.line-svg');
+  const feedback = el.querySelector('#trace-feedback');
+  const resetBtn = el.querySelector('#trace-reset');
+  let traced = [];
+  let finished = false;
+  speak("Tap the dots in order!");
+  function updateSVG() {
+    svg.innerHTML = '';
+    for (let i=1; i<traced.length; ++i) {
+      svg.innerHTML += `<line x1="${points[traced[i-1]].x}" y1="${points[traced[i-1]].y}" x2="${points[traced[i]].x}" y2="${points[traced[i]].y}" stroke="#21b3fd" stroke-width="5" stroke-linecap="round" />`;
+    }
+  }
+  dots.forEach(dot=>{
+    dot.addEventListener('click',()=>{
+      if (finished) return;
+      const idx = parseInt(dot.dataset.idx,10);
+      if (traced.length===idx) {
+        traced.push(idx);
+        dot.classList.add('correct','active');
+        playSound(clickSound);
+        updateSVG();
+        if (traced.length===points.length) {
+          feedback.innerHTML = `<span class="celebrate">Great tracing!</span>`;
+          playSound(cheerSound);
+          speak("Well done! You traced the line.");
+          showConfetti();
+          finished = true;
+          setTimeout(()=>{resetBtn.style.display="flex";},600);
+        }
+      } else {
+        feedback.innerHTML = `<span style="color:#fb6d6d;font-size:1em;">Try again! Start from the next dot.</span>`;
+        speak("Try again!");
+        playSound(clickSound);
+      }
+    });
+  });
+  resetBtn.addEventListener('click',()=>renderTraceLineGame(el));
+}
+
+// 9. Make a Shape (connect dots to make triangle/square)
+function renderDotShapeGame(el) {
+  // Make triangle
+  const shapes = [
+    {
+      name: "Triangle",
+      pts: [{x:70,y:120},{x:160,y:40},{x:250,y:120}],
+      lines: [[0,1],[1,2],[2,0]]
+    },
+    {
+      name: "Square",
+      pts: [{x:70,y:70},{x:70,y:170},{x:170,y:170},{x:170,y:70}],
+      lines: [[0,1],[1,2],[2,3],[3,0]]
+    }
+  ];
+  const shape = shapes[Math.floor(Math.random()*shapes.length)];
+  el.innerHTML = `
+    <h2 style="text-align:center;font-size:1.1rem;font-weight:700;color:var(--primary);margin-bottom:0.3em;">
+      Connect the dots to make a ${shape.name}!
+    </h2>
+    <div class="dots-canvas" style="width:320px;height:220px;position:relative;margin:0 auto;">
+      <svg class="line-svg" width="320" height="220"></svg>
+      ${shape.pts.map((pt,i)=>`<div class="dot dot-btn" data-idx="${i}" style="left:${pt.x}px;top:${pt.y}px;">${i+1}</div>`).join('')}
+    </div>
+    <div id="dotshape-feedback" style="margin-top:0.8em;font-size:1.13em;font-weight:700;text-align:center;"></div>
+    <button id="dotshape-reset" class="center-btn play-again-btn" style="display:none;margin-top:1em;">🔄 Play again!</button>
+  `;
+  const dots = Array.from(el.querySelectorAll('.dot-btn'));
+  const svg = el.querySelector('.line-svg');
+  const feedback = el.querySelector('#dotshape-feedback');
+  const resetBtn = el.querySelector('#dotshape-reset');
+  let seq = [];
+  let finished = false;
+  speak(`Connect the dots to make a ${shape.name}!`);
+  function updateSVG() {
+    svg.innerHTML = '';
+    for (let i=1; i<seq.length; ++i) {
+      svg.innerHTML += `<line x1="${shape.pts[seq[i-1]].x}" y1="${shape.pts[seq[i-1]].y}" x2="${shape.pts[seq[i]].x}" y2="${shape.pts[seq[i]].y}" stroke="#21b3fd" stroke-width="5" stroke-linecap="round" />`;
+    }
+  }
+  dots.forEach(dot=>{
+    dot.addEventListener('click',()=>{
+      if (finished) return;
+      const idx = parseInt(dot.dataset.idx,10);
+      if (seq.length===0 || (seq.length<shape.lines.length && shape.lines[seq.length][0]===seq[seq.length-1] && shape.lines[seq.length][1]===idx)) {
+        seq.push(idx);
+        dot.classList.add('correct','active');
+        playSound(clickSound);
+        updateSVG();
+        if (seq.length===shape.lines.length+1) {
+          feedback.innerHTML = `<span class="celebrate">You made a ${shape.name}!</span>`;
+          playSound(cheerSound);
+          speak(`Great! You made a ${shape.name}!`);
+          showConfetti();
+          finished = true;
+          setTimeout(()=>{resetBtn.style.display="flex";},700);
+        }
+      } else {
+        feedback.innerHTML = `<span style="color:#fb6d6d;font-size:1em;">Try the next dot in the correct order.</span>`;
+        speak("Try again!");
+        playSound(clickSound);
+      }
+    });
+  });
+  resetBtn.addEventListener('click',()=>renderDotShapeGame(el));
+}
+
+// 10. Sort & Order (numbers or size)
+function renderSortGame(el) {
+  // Sort animals by size: small–large
+  const pool = [
+    { word:"Frog", img:openmoji('1F438'), size:1 },
+    { word:"Dog", img:openmoji('1F436'), size:2 },
+    { word:"Lion", img:openmoji('1F981'), size:3 }
+  ];
+  let items = pool.sort(()=>0.5-Math.random());
+  el.innerHTML = `
+    <h2 style="text-align:center;font-size:1.1rem;font-weight:700;color:var(--primary);margin-bottom:0.3em;">
+      Drag the animals to order from smallest to largest!
+    </h2>
+    <div class="sort-area" style="display:flex;gap:1em;justify-content:center;">
+      ${items.map((item,i)=>`<div class="sort-card image-opt" data-idx="${i}" draggable="true" style="width:68px;height:68px;">
+        <img src="${item.img}" alt="${item.word}" style="width:68px;height:68px;pointer-events:none;" />
+        <div style="font-size:0.85em;color:#888;">${item.word}</div>
+      </div>`).join('')}
+    </div>
+    <button id="sort-check" class="center-btn" style="margin-top:1.2em;">Check!</button>
+    <div id="sort-feedback" style="margin-top:0.8em;font-size:1.13em;font-weight:700;text-align:center;"></div>
+    <button id="sort-reset" class="center-btn play-again-btn" style="display:none;margin-top:1em;">🔄 Play again!</button>
+  `;
+  const area = el.querySelector('.sort-area');
+  const cards = Array.from(area.querySelectorAll('.sort-card'));
+  const checkBtn = el.querySelector('#sort-check');
+  const feedback = el.querySelector('#sort-feedback');
+  const resetBtn = el.querySelector('#sort-reset');
+  let finished = false;
+  speak("Order the animals from smallest to largest!");
+  // Drag to reorder
+  cards.forEach((card, i) => {
+    card.setAttribute('draggable', 'true');
+    card.addEventListener('dragstart', function(e) {
+      e.dataTransfer.setData('idx', i);
+      setTimeout(()=>card.style.opacity='0.5',0);
+    });
+    card.addEventListener('dragend', function() {
+      card.style.opacity='1.0';
+    });
+  });
+  area.addEventListener('dragover', function(e) { e.preventDefault(); });
+  area.addEventListener('drop', function(e) {
+    const from = parseInt(e.dataTransfer.getData('idx'),10);
+    let to = Array.from(area.children).indexOf(e.target.closest('.sort-card'));
+    if (from===to || from<0 || to<0) return;
+    area.insertBefore(area.children[from], area.children[to]);
+    playSound(clickSound);
+  });
+  checkBtn.addEventListener('click',()=>{
+    if (finished) return;
+    const arr = Array.from(area.children).map((card)=>pool.find(x=>x.word===card.querySelector('div').innerText));
+    if (arr[0].size < arr[1].size && arr[1].size < arr[2].size) {
+      feedback.innerHTML = `<span class="celebrate">Great sorting!</span>`;
+      playSound(cheerSound); speak("You are right! Smallest to largest.");
+      showConfetti();
+      finished = true;
+      setTimeout(()=>{resetBtn.style.display="flex";},700);
+    } else {
+      feedback.innerHTML = `<span style="color:#fb6d6d;font-size:1em;">Try again! Drag to reorder.</span>`;
+      speak("Try again!");
+      playSound(clickSound);
+    }
+  });
+  resetBtn.addEventListener('click',()=>renderSortGame(el));
+}
+
+// 11. Pattern Repeat (Simon)
+function renderPatternGame(el) {
+  const pool = [
+    { img:openmoji('1F438'), word:"Frog" },
+    { img:openmoji('1F34E'), word:"Apple" },
+    { img:openmoji('1F981'), word:"Lion" }
+  ];
+  let pattern = Array.from({length:3+Math.floor(Math.random()*2)},()=>pool[Math.floor(Math.random()*pool.length)]);
+  el.innerHTML = `
+    <h2 style="text-align:center;font-size:1.1rem;font-weight:700;color:var(--primary);margin-bottom:0.3em;">
+      Repeat the pattern!
+    </h2>
+    <div class="pattern-row" style="display:flex;justify-content:center;gap:0.8em;margin-bottom:0.6em;">
+      ${pattern.map(item=>`<img src="${item.img}" alt="${item.word}" style="width:44px;height:44px;" />`).join('')}
+    </div>
+    <div class="pattern-input" style="display:flex;justify-content:center;gap:0.8em;">
+      ${pool.map((item,i)=>`<div class="image-opt" data-idx="${i}"><img src="${item.img}" alt="${item.word}" style="width:54px;height:54px;" /></div>`).join('')}
+    </div>
+    <button id="pattern-done" class="center-btn" style="margin-top:1.1em;">Done!</button>
+    <div id="pattern-feedback" style="margin-top:0.7em;font-size:1.11em;font-weight:700;text-align:center;"></div>
+    <button id="pattern-reset" class="center-btn play-again-btn" style="display:none;margin-top:1em;">🔄 Play again!</button>
+  `;
+  const input = [];
+  const opts = Array.from(el.querySelectorAll('.image-opt[data-idx]'));
+  const doneBtn = el.querySelector('#pattern-done');
+  const feedback = el.querySelector('#pattern-feedback');
+  const resetBtn = el.querySelector('#pattern-reset');
+  let finished = false;
+  speak("Watch and repeat the pattern!");
+  opts.forEach((opt, idx) => {
+    opt.addEventListener('click',()=>{
+      if (finished) return;
+      input.push(pool[idx]);
+      playSound(clickSound);
+      if (input.length===pattern.length) doneBtn.focus();
+    });
+  });
+  doneBtn.addEventListener('click',()=>{
+    if (finished) return;
+    let correct = pattern.every((x,i)=>input[i]&&x.word===input[i].word);
+    if (correct) {
+      feedback.innerHTML = `<span class="celebrate">Pattern matched!</span>`;
+      playSound(cheerSound);
+      speak("Well done! You matched the pattern!");
+      showConfetti();
+      finished = true;
+      setTimeout(()=>{resetBtn.style.display="flex";},700);
+    } else {
+      feedback.innerHTML = `<span style="color:#fb6d6d;font-size:1em;">Try again!</span>`;
+      speak("Try again!");
+      playSound(clickSound);
+    }
+  });
+  resetBtn.addEventListener('click',()=>renderPatternGame(el));
+}
+
+// 12. Sound Guess Game
+function renderSoundGuessGame(el) {
+  // Show 3 animals, play a sound, pick correct
+  const pool = [
+    { img:openmoji('1F981'), word:"Lion", sound:"Lion" },
+    { img:openmoji('1F436'), word:"Dog", sound:"Dog" },
+    { img:openmoji('1F438'), word:"Frog", sound:"Frog" },
+    { img:openmoji('1F427'), word:"Penguin", sound:"Penguin" }
+  ];
+  let choices = pool.sort(()=>0.5-Math.random()).slice(0,3);
+  let answer = choices[Math.floor(Math.random()*choices.length)];
+  el.innerHTML = `
+    <h2 style="text-align:center;font-size:1.1rem;font-weight:700;color:var(--primary);margin-bottom:0.3em;">
+      Which animal makes this sound?
+    </h2>
+    <button id="sound-play" class="center-btn" style="margin-bottom:1em;">🔊 Play Sound</button>
+    <div style="display:flex;justify-content:center;gap:1.1em;">
+      ${choices.map((item,i)=>`<div class="image-opt" data-idx="${i}"><img src="${item.img}" alt="${item.word}" style="width:68px;height:68px;" /></div>`).join('')}
+    </div>
+    <div id="sound-feedback" style="margin-top:0.8em;font-size:1.13em;font-weight:700;text-align:center;"></div>
+    <button id="sound-reset" class="center-btn play-again-btn" style="display:none;margin-top:1em;">🔄 Play again!</button>
+  `;
+  const btn = el.querySelector('#sound-play');
+  const opts = Array.from(el.querySelectorAll('.image-opt[data-idx]'));
+  const feedback = el.querySelector('#sound-feedback');
+  const resetBtn = el.querySelector('#sound-reset');
+  let finished = false;
+  function playAnimalSound() {
+    speak(answer.sound + " sound!");
+  }
+  btn.addEventListener('click', playAnimalSound);
+  opts.forEach((opt, idx) => {
+    opt.addEventListener('click',()=>{
+      if (finished) return;
+      if (choices[idx] === answer) {
+        opt.classList.add('correct');
+        feedback.innerHTML = `<span class="celebrate">Yes, it's a ${answer.word}!</span>`;
+        playSound(cheerSound);
+        speak(`You are right! That is the ${answer.word}!`);
+        showConfetti();
+        finished = true;
+        setTimeout(()=>{feedback.innerHTML = `<span class="celebrate">🎉 Well done! 🎉</span>`; playSound(cheerSound); resetBtn.style.display="flex";},700);
+      } else {
+        opt.classList.add('incorrect');
+        feedback.innerHTML = `<span style="color:#fb6d6d;font-size:1em;">Try again!</span>`;
+        speak("Try again!");
+        playSound(clickSound);
+      }
+    });
+  });
+  resetBtn.addEventListener('click',()=>renderSoundGuessGame(el));
+}
+
 
 </script>
 <!--
